@@ -1,0 +1,41 @@
+ARG DEBIAN_FAMILY
+ARG DEBIAN_SOURCE
+ARG DEBIAN_DESC
+FROM balenalib/${DEBIAN_SOURCE}:${DEBIAN_FAMILY}-build
+ARG DEBIAN_FAMILY
+ARG DEBIAN_SOURCE
+ARG DEBIAN_DESC
+
+LABEL maintainer="HyperHdr" \
+	org.opencontainers.image.title="${DEBIAN_SOURCE} (${DEBIAN_FAMILY})" \
+	org.opencontainers.image.description="HyperHdr build environment ${DEBIAN_DESC}" \
+	org.opencontainers.image.url="https://github.com/awawa-dev" \
+	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHdrBuildEnv" \
+	org.opencontainers.image.vendor="HyperHdr"
+
+ENV QEMU_EXECVE 1
+
+RUN [ "cross-build-start" ]
+
+# install hyperhdr deps packages
+RUN install_packages \
+	build-essential \
+	cmake \
+	git \
+	libavahi-core-dev \
+	libavahi-compat-libdnssd-dev \
+	libglvnd-dev \
+	libqt5serialport5-dev \
+	libqt5sql5-sqlite \
+	libqt5svg5-dev \
+	libqt5x11extras5-dev \
+	libturbojpeg0-dev \
+	libusb-1.0-0-dev \
+	python3-minimal \
+	rpm \
+	qtbase5-dev
+
+
+RUN [ "cross-build-end" ]
+
+ENTRYPOINT ["/usr/bin/qemu-arm-static"]
