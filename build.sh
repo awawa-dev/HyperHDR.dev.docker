@@ -22,7 +22,7 @@ if [ "$?" -ne "0" ]; then
   exit 1
 fi
 cd ../../..
-rm -rf ccache
+rm -r ccache
 if [ "$?" -ne "0" ]; then
   echo "Clean up failed"
   exit 1
