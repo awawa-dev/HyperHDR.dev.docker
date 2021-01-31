@@ -29,5 +29,12 @@ RUN install_packages \
 	libusb-1.0-0-dev \
 	python3-minimal \
 	rpm \
-	qtbase5-dev
+	qtbase5-dev \
+        libzstd-dev
+
+RUN mkdir -p /scripts
+COPY build.sh /scripts
+WORKDIR /scripts
+RUN chmod +x build.sh
+RUN ./build.sh
 

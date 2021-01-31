@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         architecture: [ x86_64, rpi012-armv6l, rpi34-armv7l]
-        debianFamily: [ buster , bullseye]
+        debianFamily: [ buster, bullseye]
         include:
           - architecture: x86_64
             dockerOS: Debian
