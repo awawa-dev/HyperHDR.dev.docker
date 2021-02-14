@@ -18,6 +18,7 @@ RUN install_packages \
 	build-essential \
 	cmake \
 	git \
+	libasound2-dev \
 	libavahi-core-dev \
 	libavahi-compat-libdnssd-dev \
 	libglvnd-dev \
