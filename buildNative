@@ -14,6 +14,8 @@ LABEL maintainer="HyperHdr" \
 	org.opencontainers.image.vendor="HyperHdr"
 
 # install hyperhdr deps packages
+RUN apt update
+RUN apt upgrade
 RUN install_packages \
 	build-essential \
 	cmake \
@@ -26,12 +28,13 @@ RUN install_packages \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \
 	libqt5x11extras5-dev \
+	libssl-dev \
 	libturbojpeg0-dev \
 	libusb-1.0-0-dev \
+	libzstd-dev \
 	python3-minimal \
 	rpm \
-	qtbase5-dev \
-        libzstd-dev
+	qtbase5-dev         
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
