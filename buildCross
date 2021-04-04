@@ -32,7 +32,6 @@ RUN install_packages \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \
 	libqt5x11extras5-dev \
-	libssl-dev \
 	libturbojpeg0-dev \
 	libusb-1.0-0-dev \
 	libzstd-dev \
