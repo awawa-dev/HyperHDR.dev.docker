@@ -9,19 +9,19 @@ fi
 mkdir ccache
 cd ccache
 
-wget https://github.com/ccache/ccache/releases/download/v4.2.1/ccache-4.2.1.tar.gz
+wget https://github.com/ccache/ccache/releases/download/v4.3/ccache-4.3.tar.gz
 if [ "$?" -ne "0" ]; then
   echo "Could not download ccache sources"
   exit 1
 fi
 
-tar -zxvf ccache-4.2.1.tar.gz
+tar -zxvf ccache-4.3.tar.gz
 if [ "$?" -ne "0" ]; then
   echo "Extracting of ccache failed"
   exit 1
 fi
 
-cd ccache-4.2.1
+cd ccache-4.3
 if [ "$?" -ne "0" ]; then
   echo "Missing ccache folder"
   exit 1

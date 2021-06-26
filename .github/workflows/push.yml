@@ -11,8 +11,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        architecture: [ x86_64, rpi012-armv6l, rpi34-armv7l]
+        architecture: [ x86_64, rpi012-armv6l, rpi34-armv7l, arm-aarch64]
         debianFamily: [ buster, bullseye]
+        exclude:
+          - architecture: arm-aarch64
+            debianFamily: bullseye
         include:
           - architecture: x86_64
             dockerOS: Debian
@@ -30,6 +33,12 @@ jobs:
             dockerOS: Debian
             dockerSource: raspberrypi3
             description: (Raspberry Pi 3 & 4)
+            tool: buildCross
+            os: Ubuntu-20.04
+          - architecture: arm-aarch64
+            dockerOS: Debian
+            dockerSource: aarch64-debian
+            description: (ARM aarch64)
             tool: buildCross
             os: Ubuntu-20.04
           

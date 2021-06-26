@@ -8,10 +8,10 @@ ARG DEBIAN_DESC
 
 LABEL maintainer="HyperHdr" \
 	org.opencontainers.image.title="${DEBIAN_SOURCE} (${DEBIAN_FAMILY})" \
-	org.opencontainers.image.description="HyperHdr build environment ${DEBIAN_DESC}" \
+	org.opencontainers.image.description="HyperHDR build environment ${DEBIAN_DESC}" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
 	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHdrBuildEnv" \
-	org.opencontainers.image.vendor="HyperHdr"
+	org.opencontainers.image.vendor="HyperHDR"
 
 # install hyperhdr deps packages
 RUN apt update
