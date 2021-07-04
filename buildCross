@@ -32,7 +32,7 @@ RUN install_packages \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \
 	libqt5x11extras5-dev \
-	libturbojpeg0-dev \
+	nasm \
 	libusb-1.0-0-dev \
 	libzstd-dev \
 	python3-minimal \
@@ -47,7 +47,7 @@ RUN chmod +x build.sh
 RUN [ "sh", "build.sh"]
 
 RUN if [ "$DEBIAN_SOURCE" = "aarch64-debian" ]; \
-    then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint; \
+    then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint && apt install libssl-dev; \
     else ln -s /usr/bin/qemu-arm-static /scripts/entrypoint; \
 fi
 
