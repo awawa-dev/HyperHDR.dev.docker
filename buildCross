@@ -37,7 +37,9 @@ RUN install_packages \
 	libzstd-dev \
 	python3-minimal \
 	rpm \
-	qtbase5-dev
+	qtbase5-dev \
+	libx11-dev \
+	libxcb-shm0-dev
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
