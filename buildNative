@@ -35,8 +35,7 @@ RUN install_packages \
 	python3-minimal \
 	rpm \
 	qtbase5-dev \
-	libx11-dev \
-	libcec-dev
+	libx11-dev
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
