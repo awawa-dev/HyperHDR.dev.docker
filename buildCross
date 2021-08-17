@@ -20,6 +20,17 @@ RUN [ "cross-build-start" ]
 # install hyperhdr deps packages
 RUN apt update
 RUN apt upgrade
+
+RUN if [ "$DEBIAN_FAMILY" = "buster" ] && [ "$DEBIAN_SOURCE" = "raspberrypi3" ]; \
+    then apt install libraspberrypi-dev; \
+    else echo skip libraspberrypi-dev; \
+fi
+
+RUN if [ "$DEBIAN_SOURCE" = "aarch64-debian" ]; \
+    then apt install libssl-dev; \
+    else echo skip libssl-dev; \
+fi
+
 RUN install_packages \
 	build-essential \
 	cmake \
@@ -49,7 +60,7 @@ RUN chmod +x build.sh
 RUN [ "sh", "build.sh"]
 
 RUN if [ "$DEBIAN_SOURCE" = "aarch64-debian" ]; \
-    then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint && apt install libssl-dev; \
+    then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint; \
     else ln -s /usr/bin/qemu-arm-static /scripts/entrypoint; \
 fi
 
