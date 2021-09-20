@@ -21,7 +21,7 @@ RUN [ "cross-build-start" ]
 RUN apt update
 RUN apt upgrade
 
-RUN if [ "$DEBIAN_FAMILY" = "bullseye" ] && [ "$DEBIAN_SOURCE" = "raspberrypi3" ]; \
+RUN if [ "$DEBIAN_SOURCE" != "aarch64-debian" ]; \
     then apt install libraspberrypi-dev; \
     else echo skip libraspberrypi-dev; \
 fi
