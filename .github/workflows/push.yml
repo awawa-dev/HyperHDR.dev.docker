@@ -34,7 +34,7 @@ jobs:
             os: Ubuntu-20.04
           - architecture: arm-aarch64
             dockerOS: Debian
-            dockerSource: aarch64-debian
+            dockerSource: raspberrypi3-64
             description: (ARM aarch64)
             tool: buildCross
             os: Ubuntu-20.04
@@ -52,7 +52,7 @@ jobs:
                             
       - name: Build Debian image
         run: |
-          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.debianFamily }} --build-arg DEBIAN_FAMILY=${{ matrix.debianFamily }} --build-arg DEBIAN_SOURCE=${{ matrix.dockerSource }} --build-arg DEBIAN_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
+          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.debianFamily }} --build-arg DEBIAN_FAMILY=${{ matrix.debianFamily }} --build-arg DEBIAN_ARCHITECTURE=${{ matrix.architecture }} --build-arg DEBIAN_SOURCE=${{ matrix.dockerSource }} --build-arg DEBIAN_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
 
       - name: Publish to GitHub Container & Package Registry
         run: |
