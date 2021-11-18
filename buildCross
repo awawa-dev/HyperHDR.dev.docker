@@ -23,17 +23,13 @@ RUN [ "cross-build-start" ]
 RUN apt update
 RUN apt upgrade
 
-RUN if [ "$DEBIAN_ARCHITECTURE" != "arm-aarch64" -o "$DEBIAN_FAMILY" != "buster" ]; \
-    then apt install libraspberrypi-dev; \
-    else echo skip libraspberrypi-dev; \
-fi
-
 RUN if [ "$DEBIAN_ARCHITECTURE" = "arm-aarch64" ]; \
     then apt install libssl-dev; \
     else echo skip libssl-dev; \
 fi
 
 RUN install_packages \
+	libraspberrypi-dev \
 	build-essential \
 	cmake \
 	git \
