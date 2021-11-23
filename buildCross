@@ -48,6 +48,8 @@ RUN install_packages \
 	rpm \
 	qtbase5-dev \
 	libx11-dev \
+	libprotobuf-dev \
+	protobuf-compiler \
 	libp8-platform-dev
 
 RUN mkdir -p /scripts
