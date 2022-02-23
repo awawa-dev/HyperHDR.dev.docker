@@ -37,7 +37,9 @@ RUN install_packages \
 	qtbase5-dev \
 	libx11-dev \
 	libprotobuf-dev \
-	protobuf-compiler
+	protobuf-compiler \
+	qdbus-qt5 \
+	libpipewire-0.3-dev
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts

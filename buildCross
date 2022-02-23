@@ -50,7 +50,9 @@ RUN install_packages \
 	libx11-dev \
 	libprotobuf-dev \
 	protobuf-compiler \
-	libp8-platform-dev
+	libp8-platform-dev \
+	qdbus-qt5 \
+	libpipewire-0.3-dev
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
