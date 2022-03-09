@@ -37,6 +37,7 @@ RUN install_packages \
 	libavahi-core-dev \
 	libavahi-compat-libdnssd-dev \
 	libglvnd-dev \
+	libturbojpeg0-dev \
 	libqt5serialport5-dev \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \
