@@ -37,8 +37,6 @@ RUN install_packages \
 	rpm \
 	qtbase5-dev \
 	libx11-dev \
-	libprotobuf-dev \
-	protobuf-compiler \
 	qdbus-qt5 \
 	libpipewire-0.3-dev
 
