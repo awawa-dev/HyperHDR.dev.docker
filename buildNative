@@ -23,6 +23,9 @@ RUN install_packages \
 	libasound2-dev \
 	libavahi-core-dev \
 	libavahi-compat-libdnssd-dev \
+	libegl-dev \
+	libgbm-dev \
+	libgl-dev \
 	libglvnd-dev \
 	libturbojpeg0-dev \
 	libqt5serialport5-dev \
