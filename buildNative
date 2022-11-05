@@ -24,7 +24,6 @@ RUN install_packages \
 	libavahi-core-dev \
 	libavahi-compat-libdnssd-dev \
 	libegl-dev \
-	libgbm-dev \
 	libgl-dev \
 	libglvnd-dev \
 	libturbojpeg0-dev \
