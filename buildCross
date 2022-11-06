@@ -34,8 +34,6 @@ RUN install_packages \
 	cmake \
 	git \
 	libasound2-dev \
-	libavahi-core-dev \
-	libavahi-compat-libdnssd-dev \
 	libegl-dev \
 	libgl-dev \
 	libglvnd-dev \
