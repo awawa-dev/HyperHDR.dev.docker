@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  DEBIAN_TESTING: "bookworm"
+
 jobs:
   Docker:
     name: ${{ matrix.dockerOS }} ${{ matrix.debianFamily }} ${{ matrix.description }}
@@ -12,7 +15,7 @@ jobs:
     strategy:
       matrix:
         architecture: [ x86_64, rpi012-armv6l, rpi34-armv7l, arm-aarch64]
-        debianFamily: [ bullseye]       
+        debianFamily: [ "bullseye", "bookworm"] 
         include:
           - architecture: x86_64
             dockerOS: Debian
@@ -22,13 +25,14 @@ jobs:
             os: Ubuntu-20.04
           - architecture: rpi012-armv6l
             dockerOS: Debian
-            dockerSource: raspberry-pi
+            dockerSource: raspberry-pi            
             description: (Raspberry Pi ZERO, 1 & 2)
             tool: buildCross
             os: Ubuntu-20.04
           - architecture: rpi34-armv7l
             dockerOS: Debian
             dockerSource: raspberrypi3
+            altDockerSource: raspberry-pi
             description: (Raspberry Pi 3 & 4)
             tool: buildCross
             os: Ubuntu-20.04
@@ -51,8 +55,14 @@ jobs:
                 password: ${{ secrets.GITHUB_TOKEN }}
                             
       - name: Build Debian image
+        if: matrix.debianFamily != env.DEBIAN_TESTING || matrix.altDockerSource ==''
         run: |
           docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.debianFamily }} --build-arg DEBIAN_FAMILY=${{ matrix.debianFamily }} --build-arg DEBIAN_ARCHITECTURE=${{ matrix.architecture }} --build-arg DEBIAN_SOURCE=${{ matrix.dockerSource }} --build-arg DEBIAN_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
+
+      - name: Build Debian (next version) image
+        if: matrix.debianFamily == env.DEBIAN_TESTING && matrix.altDockerSource !=''
+        run: |
+          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.debianFamily }} --build-arg DEBIAN_FAMILY=${{ matrix.debianFamily }} --build-arg DEBIAN_ARCHITECTURE=${{ matrix.architecture }} --build-arg DEBIAN_SOURCE=${{ matrix.altDockerSource }} --build-arg DEBIAN_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
 
       - name: Publish to GitHub Container & Package Registry
         run: |

@@ -29,7 +29,6 @@ RUN if [ "$DEBIAN_ARCHITECTURE" = "arm-aarch64" ]; \
 fi
 
 RUN install_packages \
-	libraspberrypi-dev \
 	build-essential \
 	cmake \
 	git \
@@ -52,6 +51,8 @@ RUN install_packages \
 	libp8-platform-dev \
 	qdbus-qt5 \
 	libpipewire-0.3-dev
+
+RUN install_packages libraspberrypi-dev || exit 0
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
