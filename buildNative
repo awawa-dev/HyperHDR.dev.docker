@@ -1,21 +1,21 @@
-ARG DEBIAN_FAMILY
-ARG DEBIAN_SOURCE
-ARG DEBIAN_DESC
-FROM balenalib/${DEBIAN_SOURCE}:${DEBIAN_FAMILY}-build
-ARG DEBIAN_FAMILY
-ARG DEBIAN_SOURCE
-ARG DEBIAN_DESC
+ARG LINUX_VERSION
+ARG DOCKER_SOURCE
+ARG BUILD_DESC
+FROM balenalib/${DOCKER_SOURCE}:${LINUX_VERSION}-build
+ARG LINUX_VERSION
+ARG DOCKER_SOURCE
+ARG BUILD_DESC
 
 LABEL maintainer="HyperHdr" \
-	org.opencontainers.image.title="${DEBIAN_SOURCE} (${DEBIAN_FAMILY})" \
-	org.opencontainers.image.description="HyperHDR build environment ${DEBIAN_DESC}" \
+	org.opencontainers.image.title="${DOCKER_SOURCE} (${LINUX_VERSION})" \
+	org.opencontainers.image.description="HyperHDR build environment ${BUILD_DESC}" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
 	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHdrBuildEnv" \
 	org.opencontainers.image.vendor="HyperHDR"
 
 # install hyperhdr deps packages
 RUN apt update
-RUN apt upgrade
+RUN apt upgrade -y
 RUN install_packages \
 	build-essential \
 	cmake \

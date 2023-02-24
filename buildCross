@@ -1,16 +1,16 @@
-ARG DEBIAN_FAMILY
-ARG DEBIAN_ARCHITECTURE
-ARG DEBIAN_SOURCE
-ARG DEBIAN_DESC
-FROM balenalib/${DEBIAN_SOURCE}:${DEBIAN_FAMILY}-build
-ARG DEBIAN_FAMILY
-ARG DEBIAN_ARCHITECTURE
-ARG DEBIAN_SOURCE
-ARG DEBIAN_DESC
+ARG LINUX_VERSION
+ARG LINUX_ARCHITECTURE
+ARG DOCKER_SOURCE
+ARG BUILD_DESC
+FROM balenalib/${DOCKER_SOURCE}:${LINUX_VERSION}-build
+ARG LINUX_VERSION
+ARG LINUX_ARCHITECTURE
+ARG DOCKER_SOURCE
+ARG BUILD_DESC
 
 LABEL maintainer="HyperHdr" \
-	org.opencontainers.image.title="${DEBIAN_SOURCE} (${DEBIAN_FAMILY})" \
-	org.opencontainers.image.description="HyperHDR build environment ${DEBIAN_DESC}" \
+	org.opencontainers.image.title="${DOCKER_SOURCE} (${LINUX_VERSION})" \
+	org.opencontainers.image.description="HyperHDR build environment ${BUILD_DESC}" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
 	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHdrBuildEnv" \
 	org.opencontainers.image.vendor="HyperHDR"
@@ -23,7 +23,7 @@ RUN [ "cross-build-start" ]
 RUN apt update
 RUN apt upgrade
 
-RUN if [ "$DEBIAN_ARCHITECTURE" = "arm-aarch64" ]; \
+RUN if [ "$LINUX_ARCHITECTURE" = "arm-aarch64" ]; \
     then apt install libssl-dev; \
     else echo skip libssl-dev; \
 fi
@@ -61,7 +61,7 @@ RUN chmod +x build.sh
 
 RUN [ "sh", "build.sh"]
 
-RUN if [ "$DEBIAN_ARCHITECTURE" = "arm-aarch64" ]; \
+RUN if [ "$LINUX_ARCHITECTURE" = "arm-aarch64" ]; \
     then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint; \
     else ln -s /usr/bin/qemu-arm-static /scripts/entrypoint; \
 fi

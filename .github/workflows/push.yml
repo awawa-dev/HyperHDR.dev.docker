@@ -21,18 +21,32 @@ jobs:
             linuxVersion: "ArchLinux"
             dockerOS: ""
             dockerSource: ""
-            description: (x86_64)
+            description: ArchLinux (x86_64)
             tool: buildArch
-            os: Ubuntu-22.04        
+            os: Ubuntu-22.04
+          - architecture: x86_64
+            dockerOS: Ubuntu
+            dockerSource: generic-ubuntu
+            linuxVersion: "jammy"
+            description: Ubuntu 22.04 LTS (x86_64)
+            tool: buildNative
+            os: Ubuntu-22.04
+          - architecture: x86_64
+            dockerOS: Ubuntu
+            dockerSource: generic-ubuntu
+            linuxVersion: "kinetic"
+            description: Ubuntu 22.10 (x86_64)
+            tool: buildNative
+            os: Ubuntu-22.04 
           - architecture: x86_64
             dockerOS: Debian
             dockerSource: amd64-debian
             description: (x86_64)
             tool: buildNative
-            os: Ubuntu-22.04
+            os: Ubuntu-22.04            
           - architecture: rpi012-armv6l
             dockerOS: Debian
-            dockerSource: raspberry-pi            
+            dockerSource: raspberry-pi
             description: (Raspberry Pi ZERO, 1 & 2)
             tool: buildCross
             os: Ubuntu-22.04
@@ -61,15 +75,15 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
                             
-      - name: Build Debian image
+      - name: Build docker container
         if: matrix.linuxVersion != env.DEBIAN_TESTING || matrix.altDockerSource ==''
         run: |
-          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg DEBIAN_FAMILY=${{ matrix.linuxVersion }} --build-arg DEBIAN_ARCHITECTURE=${{ matrix.architecture }} --build-arg DEBIAN_SOURCE=${{ matrix.dockerSource }} --build-arg DEBIAN_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
+          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.dockerSource }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
 
-      - name: Build Debian (next version) image
+      - name: Build Debian (next version) docker container
         if: matrix.linuxVersion == env.DEBIAN_TESTING && matrix.altDockerSource !=''
         run: |
-          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg DEBIAN_FAMILY=${{ matrix.linuxVersion }} --build-arg DEBIAN_ARCHITECTURE=${{ matrix.architecture }} --build-arg DEBIAN_SOURCE=${{ matrix.altDockerSource }} --build-arg DEBIAN_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
+          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.altDockerSource }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
 
       - name: Publish to GitHub Container & Package Registry
         run: |
