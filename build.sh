@@ -4,7 +4,7 @@ if cmake --version | grep -q '3.16.3'; then
   apt update
   apt remove cmake cmake-data
   apt install cmake=3.13.4-1 cmake-data=3.13.4-1
-fi	
+fi
 
 # build and install ccache
 ccache_version="4.7.4"
