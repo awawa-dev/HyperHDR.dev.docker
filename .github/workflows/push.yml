@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         architecture: [ x86_64, rpi012-armv6l, rpi34-armv7l, arm-aarch64]
-        linuxVersion: [ "bullseye", "bookworm"] 
+        linuxVersion: [ "bullseye", "bookworm"]
         include:
           - architecture: x86_64
             linuxVersion: "ArchLinux"
@@ -37,13 +37,13 @@ jobs:
             linuxVersion: "kinetic"
             description: Ubuntu 22.10 (x86_64)
             tool: buildNative
-            os: Ubuntu-22.04 
+            os: Ubuntu-22.04
           - architecture: x86_64
             dockerOS: Debian
             dockerSource: amd64-debian
             description: (x86_64)
             tool: buildNative
-            os: Ubuntu-22.04            
+            os: Ubuntu-22.04
           - architecture: rpi012-armv6l
             dockerOS: Debian
             dockerSource: raspberry-pi
@@ -63,18 +63,18 @@ jobs:
             description: (ARM aarch64)
             tool: buildCross
             os: Ubuntu-22.04
-          
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
                 registry: ghcr.io
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
-                            
+
       - name: Build docker container
         if: matrix.linuxVersion != env.DEBIAN_TESTING || matrix.altDockerSource ==''
         run: |
