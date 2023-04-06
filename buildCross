@@ -12,7 +12,7 @@ LABEL maintainer="HyperHdr" \
 	org.opencontainers.image.title="${DOCKER_SOURCE} (${LINUX_VERSION})" \
 	org.opencontainers.image.description="HyperHDR build environment ${BUILD_DESC}" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHdrBuildEnv" \
+	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
 	org.opencontainers.image.vendor="HyperHDR"
 
 ENV QEMU_EXECVE 1
@@ -34,23 +34,24 @@ RUN install_packages \
 	git \
 	libasound2-dev \
 	libegl-dev \
+	libftdi1-dev	\
 	libgl-dev \
 	libglvnd-dev \
-	libturbojpeg0-dev \
+	libp8-platform-dev \
+	libpipewire-0.3-dev \
 	libqt5serialport5-dev \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \
 	libqt5x11extras5-dev \
-	nasm \
+	libturbojpeg0-dev \
 	libusb-1.0-0-dev \
-	libzstd-dev \
-	python3-minimal \
-	rpm \
-	qtbase5-dev \
 	libx11-dev \
-	libp8-platform-dev \
+	libzstd-dev \
+	nasm \
+	python3-minimal \
+	qtbase5-dev \
 	qdbus-qt5 \
-	libpipewire-0.3-dev
+	rpm
 
 RUN install_packages libraspberrypi-dev || exit 0
 

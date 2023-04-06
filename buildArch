@@ -4,7 +4,7 @@ LABEL maintainer="HyperHdr" \
 	org.opencontainers.image.title="ArchLinux" \
 	org.opencontainers.image.description="HyperHDR build environment (ArchLinux)" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHdrBuildEnv" \
+	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
 	org.opencontainers.image.vendor="HyperHDR"
 
 # install HyperHDR deps packages
@@ -17,6 +17,7 @@ RUN sudo pacman -S --noconfirm --needed \
 	git \
 	nasm \
 	alsa-lib \
+	libftdi \
 	libglvnd \
 	libjpeg-turbo \
 	qt5-serialport \
