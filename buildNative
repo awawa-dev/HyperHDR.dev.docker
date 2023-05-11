@@ -1,7 +1,7 @@
 ARG LINUX_VERSION
 ARG DOCKER_SOURCE
 ARG BUILD_DESC
-FROM balenalib/${DOCKER_SOURCE}:${LINUX_VERSION}-build
+FROM ${DOCKER_SOURCE}:${LINUX_VERSION}
 ARG LINUX_VERSION
 ARG DOCKER_SOURCE
 ARG BUILD_DESC
@@ -16,7 +16,7 @@ LABEL maintainer="HyperHdr" \
 # install hyperhdr deps packages
 RUN apt update
 RUN apt upgrade -y
-RUN install_packages \
+RUN apt --assume-yes install \
 	build-essential \
 	cmake \
 	git \
@@ -36,10 +36,12 @@ RUN install_packages \
 	libx11-dev \
 	libzstd-dev \
 	nasm \
+	pkg-config \
 	python3-minimal \
 	qtbase5-dev \
 	qdbus-qt5 \
-	rpm
+	rpm \
+	wget
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts

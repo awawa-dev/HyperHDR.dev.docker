@@ -1,3 +1,3 @@
-# HyperHdrBuildEnv
+# HyperHDR.dev.docker  
 
-Docker images for building HyperHDR application.
+Linux (x86/arm) Docker development containers for building HyperHDR application.

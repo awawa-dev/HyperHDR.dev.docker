@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         architecture: [ x86_64, rpi012-armv6l, rpi34-armv7l, arm-aarch64]
-        linuxVersion: [ "bullseye", "bookworm"]
+        linuxVersion: [ bullseye, bookworm]
         include:
           - architecture: x86_64
             linuxVersion: "ArchLinux"
@@ -26,21 +26,21 @@ jobs:
             os: Ubuntu-22.04
           - architecture: x86_64
             dockerOS: Ubuntu
-            dockerSource: generic-ubuntu
-            linuxVersion: "jammy"
+            dockerSource: ubuntu
+            linuxVersion: jammy
             description: Ubuntu 22.04 LTS (x86_64)
             tool: buildNative
             os: Ubuntu-22.04
           - architecture: x86_64
             dockerOS: Ubuntu
-            dockerSource: generic-ubuntu
-            linuxVersion: "kinetic"
-            description: Ubuntu 22.10 (x86_64)
+            dockerSource: ubuntu
+            linuxVersion: lunar
+            description: Ubuntu 23.04 (x86_64)
             tool: buildNative
             os: Ubuntu-22.04
           - architecture: x86_64
             dockerOS: Debian
-            dockerSource: amd64-debian
+            dockerSource: debian
             description: (x86_64)
             tool: buildNative
             os: Ubuntu-22.04
