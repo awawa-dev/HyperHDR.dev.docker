@@ -21,25 +21,24 @@ RUN sudo dnf -y install \
 	cmake \
 	git \
 	alsa-lib-devel \
-	libegl-dev \
-	libftdi1-dev \
-	libgl-dev \
-	libglvnd-dev \
-	libpipewire-0.3-dev \
+	mesa-libEGL-devel \
+	libftdi-c++-devel \
+	mesa-libGL-devel \
+	libglvnd-devel \
+	pipewire-devel \
 	qt5-qtserialport-devel \
-	libqt5sql5-sqlite \
-	libqt5svg5-dev \
-	libqt5x11extras5-dev \
-	libssl-dev \
-	libturbojpeg0-dev \
-	libusb-1.0-0-dev \
-	libx11-dev \
-	libzstd-dev \
+	qt5-qtbase-devel \
+	qt5-qtsvg-devel \
+	qt5-qtx11extras-devel \
+	openssl-devel \
+	turbojpeg-devel \
+	libusb-devel \
+	libX11-devel \
+	libzstd-devel \
 	nasm \
 	pkg-config \
 	python3-minimal \
-	qtbase5-dev \
-	qdbus-qt5 \
+	qt5-qttools \
 	wget
 
 RUN mkdir -p /scripts
