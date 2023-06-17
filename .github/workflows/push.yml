@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - fedora
 
 env:
   DEBIAN_TESTING: "bookworm"
