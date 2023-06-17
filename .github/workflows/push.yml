@@ -26,9 +26,9 @@ jobs:
             tool: buildArch
             os: Ubuntu-22.04
           - architecture: x86_64
-            linuxVersion: "Fedora:38"
+            linuxVersion: "Fedora_38"
             dockerOS: ""
-            dockerSource: ""
+            dockerSource: "Fedora:38"
             description: Fedora 38 (x86_64)
             tool: buildFedora
             os: Ubuntu-22.04            
