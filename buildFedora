@@ -1,0 +1,50 @@
+ARG LINUX_VERSION
+ARG DOCKER_SOURCE
+ARG BUILD_DESC
+FROM ${DOCKER_SOURCE}
+ARG LINUX_VERSION
+ARG DOCKER_SOURCE
+ARG BUILD_DESC
+
+LABEL maintainer="HyperHDR" \
+	org.opencontainers.image.title="${LINUX_VERSION}" \
+	org.opencontainers.image.description="HyperHDR build environment for ${LINUX_VERSION}" \
+	org.opencontainers.image.url="https://github.com/awawa-dev" \
+	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
+	org.opencontainers.image.vendor="HyperHDR"
+
+# install hyperhdr deps packages
+RUN sudo dnf -y upgrade
+RUN sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
+RUN sudo dnf -y install \
+	cmake \
+	git \
+	alsa-lib-devel \
+	fedora-packager \
+	mesa-libEGL-devel \
+	libftdi-c++-devel \
+	mesa-libGL-devel \
+	libglvnd-devel \
+	pipewire-devel \
+	qt5-qtserialport-devel \
+	qt5-qtbase-devel \
+	qt5-qtsvg-devel \
+	qt5-qtx11extras-devel \
+	openssl-devel \
+	turbojpeg-devel \
+	libusb1-devel \
+	libX11-devel \
+	libzstd-devel \
+	nasm \
+	pkg-config \
+	qt5-qttools \
+	wget
+
+RUN sudo dnf clean all
+
+RUN mkdir -p /scripts
+COPY build.sh /scripts
+WORKDIR /scripts
+RUN chmod +x build.sh
+RUN ./build.sh
+

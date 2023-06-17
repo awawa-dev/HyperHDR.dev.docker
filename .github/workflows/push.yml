@@ -25,6 +25,13 @@ jobs:
             tool: buildArch
             os: Ubuntu-22.04
           - architecture: x86_64
+            linuxVersion: "Fedora_38"
+            dockerOS: ""
+            dockerSource: "fedora:38"
+            description: "(x86_64)"
+            tool: buildFedora
+            os: Ubuntu-22.04            
+          - architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
             linuxVersion: jammy

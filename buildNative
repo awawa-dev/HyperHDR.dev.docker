@@ -6,7 +6,7 @@ ARG LINUX_VERSION
 ARG DOCKER_SOURCE
 ARG BUILD_DESC
 
-LABEL maintainer="HyperHdr" \
+LABEL maintainer="HyperHDR" \
 	org.opencontainers.image.title="${DOCKER_SOURCE} (${LINUX_VERSION})" \
 	org.opencontainers.image.description="HyperHDR build environment ${BUILD_DESC}" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
@@ -40,7 +40,6 @@ RUN apt --assume-yes install \
 	python3-minimal \
 	qtbase5-dev \
 	qdbus-qt5 \
-	rpm \
 	wget
 
 RUN mkdir -p /scripts
