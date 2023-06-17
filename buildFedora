@@ -8,7 +8,7 @@ ARG BUILD_DESC
 
 LABEL maintainer="HyperHDR" \
 	org.opencontainers.image.title="${LINUX_VERSION}" \
-	org.opencontainers.image.description="HyperHDR build environment ${BUILD_DESC}" \
+	org.opencontainers.image.description="HyperHDR build environment for ${LINUX_VERSION}" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
 	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
 	org.opencontainers.image.vendor="HyperHDR"
@@ -32,12 +32,11 @@ RUN sudo dnf -y install \
 	qt5-qtx11extras-devel \
 	openssl-devel \
 	turbojpeg-devel \
-	libusb-devel \
+	libusb1-devel \
 	libX11-devel \
 	libzstd-devel \
 	nasm \
 	pkg-config \
-	python3-minimal \
 	qt5-qttools \
 	wget
 
