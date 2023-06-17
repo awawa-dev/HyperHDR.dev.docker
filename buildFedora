@@ -14,8 +14,8 @@ LABEL maintainer="HyperHDR" \
 	org.opencontainers.image.vendor="HyperHDR"
 
 # install hyperhdr deps packages
-RUN sudo dnf upgrade
-RUN sudo dnf group install "C Development Tools and Libraries" "Development Tools"
+RUN sudo dnf -y upgrade
+RUN sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
 RUN sudo dnf -y install \
 	cmake \
 	git \
