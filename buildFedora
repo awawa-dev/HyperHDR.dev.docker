@@ -14,9 +14,9 @@ LABEL maintainer="HyperHDR" \
 	org.opencontainers.image.vendor="HyperHDR"
 
 # install hyperhdr deps packages
-#RUN sudo dnf check-update
-#RUN sudo dnf upgrade
-#RUN sudo dnf group install "C Development Tools and Libraries" "Development Tools"
+RUN sudo dnf check-update
+RUN sudo dnf upgrade
+RUN sudo dnf group install "C Development Tools and Libraries" "Development Tools"
 RUN sudo dnf -y install \
 	cmake \
 	git \
@@ -39,6 +39,8 @@ RUN sudo dnf -y install \
 	pkg-config \
 	qt5-qttools \
 	wget
+
+RUN dnf clean all
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
