@@ -20,6 +20,7 @@ RUN sudo dnf -y install \
 	cmake \
 	git \
 	alsa-lib-devel \
+	fedora-packager \
 	mesa-libEGL-devel \
 	libftdi-c++-devel \
 	mesa-libGL-devel \
