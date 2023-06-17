@@ -1,6 +1,6 @@
 FROM library/archlinux:base-devel
 
-LABEL maintainer="HyperHdr" \
+LABEL maintainer="HyperHDR" \
 	org.opencontainers.image.title="ArchLinux" \
 	org.opencontainers.image.description="HyperHDR build environment (ArchLinux)" \
 	org.opencontainers.image.url="https://github.com/awawa-dev" \
