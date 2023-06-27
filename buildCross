@@ -37,6 +37,7 @@ RUN install_packages \
 	libftdi1-dev	\
 	libgl-dev \
 	libglvnd-dev \
+	liblzma-dev \
 	libp8-platform-dev \
 	libpipewire-0.3-dev \
 	libqt5serialport5-dev \

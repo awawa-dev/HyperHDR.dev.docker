@@ -38,7 +38,8 @@ RUN sudo dnf -y install \
 	nasm \
 	pkg-config \
 	qt5-qttools \
-	wget
+	wget \
+	xz-devel
 
 RUN sudo dnf clean all
 

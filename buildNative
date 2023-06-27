@@ -25,6 +25,7 @@ RUN apt --assume-yes install \
 	libftdi1-dev \
 	libgl-dev \
 	libglvnd-dev \
+	liblzma-dev \
 	libpipewire-0.3-dev \
 	libqt5serialport5-dev \
 	libqt5sql5-sqlite \
