@@ -62,7 +62,7 @@ RUN chmod +x build.sh
 
 RUN [ "sh", "build.sh"]
 
-RUN if [ "$LINUX_ARCHITECTURE" = "arm-aarch64" ]; \
+RUN if [ "$LINUX_ARCHITECTURE" = "arm-64bit-aarch64" ]; \
     then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint; \
     else ln -s /usr/bin/qemu-arm-static /scripts/entrypoint; \
 fi
