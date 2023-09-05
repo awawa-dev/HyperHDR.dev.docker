@@ -9,6 +9,7 @@ LABEL maintainer="HyperHDR" \
 
 # install HyperHDR deps packages
 RUN sudo pacman -Syy
+RUN sudo pacman -Syu --noconfirm
 RUN sudo pacman -S --noconfirm --needed \
 	base-devel \
 	qt5-base \
