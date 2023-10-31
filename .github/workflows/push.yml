@@ -40,8 +40,8 @@ jobs:
           - architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
-            linuxVersion: lunar
-            description: Ubuntu 23.04 (x86_64)
+            linuxVersion: mantic
+            description: Ubuntu 23.10 (x86_64)
             tool: buildNative
           - architecture: x86_64
             dockerOS: Debian
