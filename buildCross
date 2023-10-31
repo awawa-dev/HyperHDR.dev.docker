@@ -42,6 +42,7 @@ RUN install_packages \
 	libp8-platform-dev \
 	libudev-dev \
 	libpipewire-0.3-dev \
+	libssl-dev \
 	libqt5serialport5-dev \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \
