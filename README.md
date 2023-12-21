@@ -1,3 +1,3 @@
 # HyperHDR.dev.docker  
 
-Linux (x86/arm) Docker development containers for building HyperHDR application.
+Linux Docker development containers for building HyperHDR application targeting x64/armv6/aarch64 architectures.
