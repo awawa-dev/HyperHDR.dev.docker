@@ -44,6 +44,12 @@ jobs:
             description: Ubuntu 23.10 (x86_64)
             tool: buildNative
           - architecture: x86_64
+            dockerOS: Ubuntu
+            dockerSource: ubuntu
+            linuxVersion: noble
+            description: Ubuntu 24.04 LTS (x86_64)
+            tool: buildNative
+          - architecture: x86_64
             dockerOS: Debian
             dockerSource: debian
             description: (x86_64)
