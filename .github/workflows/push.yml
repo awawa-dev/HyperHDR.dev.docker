@@ -26,9 +26,9 @@ jobs:
             description: ArchLinux (x86_64)
             tool: buildArch
           - architecture: x86_64
-            linuxVersion: "Fedora_39"
+            linuxVersion: "Fedora_40"
             dockerOS: ""
-            dockerSource: "fedora:39"
+            dockerSource: "fedora:40"
             description: "(x86_64)"
             tool: buildFedora
           - architecture: x86_64
