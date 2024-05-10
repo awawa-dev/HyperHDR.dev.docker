@@ -24,7 +24,9 @@ RUN sudo dnf -y install \
 	mesa-libEGL-devel \
 	libftdi-c++-devel \
 	mesa-libGL-devel \
-	libglvnd-devel \
+	gtk3-devel \
+	libayatana-appindicator-gtk3 \	
+	libglvnd-devel \	
 	pipewire-devel \
 	qt5-qtserialport-devel \
 	qt5-qtbase-devel \

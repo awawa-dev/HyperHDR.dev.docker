@@ -18,6 +18,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	git \
 	nasm \
 	alsa-lib \
+	gtk3 \
+	libayatana-appindicator \	
 	libftdi \
 	libglvnd \
 	libjpeg-turbo \
