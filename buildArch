@@ -42,7 +42,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	fakeroot \
 	binutils \
 	pkgfile \
-	bash
+	bash \
+	systemd-libs
 RUN sudo sed -i '/COMPRESSZST=/d' /etc/makepkg.conf
 RUN sudo bash -c "echo 'COMPRESSZST=(zstd -c -T0 --ultra -20 -)' >> /etc/makepkg.conf"
 RUN sudo useradd --no-create-home build && usermod -L build

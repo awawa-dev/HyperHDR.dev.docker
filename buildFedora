@@ -41,7 +41,8 @@ RUN sudo dnf -y install \
 	pkg-config \
 	qt5-qttools \
 	wget \
-	xz-devel
+	xz-devel \
+	systemd-devel
 
 RUN sudo dnf clean all
 

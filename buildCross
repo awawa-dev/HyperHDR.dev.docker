@@ -43,6 +43,7 @@ RUN install_packages \
 	libudev-dev \
 	libpipewire-0.3-dev \
 	libssl-dev \
+	libsystemd-dev \
 	libqt5serialport5-dev \
 	libqt5sql5-sqlite \
 	libqt5svg5-dev \

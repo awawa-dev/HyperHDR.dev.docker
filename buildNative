@@ -34,6 +34,7 @@ RUN apt --assume-yes install \
 	libqt5svg5-dev \
 	libqt5x11extras5-dev \
 	libssl-dev \
+	libsystemd-dev \
 	libturbojpeg0-dev \
 	libusb-1.0-0-dev \
 	libx11-dev \
