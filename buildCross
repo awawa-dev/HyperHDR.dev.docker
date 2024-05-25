@@ -54,9 +54,8 @@ RUN install_packages \
 	libzstd-dev \
 	nasm \
 	python3-minimal \
-	qtbase5-dev \
-	qdbus-qt5
-
+	qtbase5-dev
+	
 RUN install_packages libraspberrypi-dev || exit 0
 
 RUN mkdir -p /scripts

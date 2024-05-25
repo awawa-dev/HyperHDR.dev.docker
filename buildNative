@@ -43,7 +43,6 @@ RUN apt --assume-yes install \
 	pkg-config \
 	python3-minimal \
 	qtbase5-dev \
-	qdbus-qt5 \
 	wget
 
 RUN mkdir -p /scripts
