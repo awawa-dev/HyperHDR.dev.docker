@@ -27,6 +27,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	libx11 \
 	freetds \
 	libfbclient \
+	mariadb-libs \
+	postgresql-libs \	
 	pipewire \
 	python \
 	mesa \
