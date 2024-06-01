@@ -30,16 +30,12 @@ RUN apt --assume-yes install \
 	liblzma-dev \
 	libpipewire-0.3-dev \
 	libqt5serialport5-dev \
-	libqt5sql5-sqlite \
-	libqt5svg5-dev \
-	libqt5x11extras5-dev \
 	libssl-dev \
 	libsystemd-dev \
 	libturbojpeg0-dev \
 	libusb-1.0-0-dev \
 	libx11-dev \
 	libzstd-dev \
-	nasm \
 	pkg-config \
 	python3-minimal \
 	qtbase5-dev \

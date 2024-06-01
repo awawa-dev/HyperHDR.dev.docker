@@ -16,7 +16,6 @@ RUN sudo pacman -S --noconfirm --needed \
 	openssl \
 	cmake \
 	git \
-	nasm \
 	alsa-lib \
 	gtk3 \
 	libayatana-appindicator \	
@@ -24,15 +23,10 @@ RUN sudo pacman -S --noconfirm --needed \
 	libglvnd \
 	libjpeg-turbo \
 	qt5-serialport \
-	qt5-svg \
-	qt5-x11extras \
 	wayland \
-	qt5-tools \
 	libx11 \
 	freetds \
 	libfbclient \
-	mariadb-libs \
-	postgresql-libs \
 	pipewire \
 	python \
 	mesa \

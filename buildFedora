@@ -30,8 +30,6 @@ RUN sudo dnf -y install \
 	pipewire-devel \
 	qt5-qtserialport-devel \
 	qt5-qtbase-devel \
-	qt5-qtsvg-devel \
-	qt5-qtx11extras-devel \
 	openssl-devel \
 	turbojpeg-devel \
 	libusb1-devel \
@@ -39,7 +37,6 @@ RUN sudo dnf -y install \
 	libzstd-devel \
 	nasm \
 	pkg-config \
-	qt5-qttools \
 	wget \
 	xz-devel \
 	systemd-devel
