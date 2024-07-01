@@ -7,7 +7,7 @@ if cmake --version | grep -q '3.16.3'; then
 fi
 
 # build and install ccache
-ccache_version="4.9.1"
+ccache_version="4.10.1"
 
 mkdir ccache
 cd ccache
