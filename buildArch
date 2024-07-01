@@ -33,14 +33,24 @@ RUN sudo pacman -S --noconfirm --needed \
 	pipewire \
 	python \
 	mesa \
-	ccache \
 	dpkg \
 	xz \
 	fakeroot \
 	binutils \
 	pkgfile \
 	bash \
-	systemd-libs
+	systemd-libs \
+	wget
+
+RUN sudo sed -i "/OPTIONS/s/\sdebug/ !debug/g" /etc/makepkg.conf
+RUN sudo sed -i "/OPTIONS/s/\slto/ !lto/g" /etc/makepkg.conf
+RUN sudo cat /etc/makepkg.conf | grep OPTIONS=
+
+RUN mkdir -p /scripts
+COPY build.sh /scripts
+RUN chmod +x /scripts/build.sh
+RUN bash -xc "cd /scripts;./build.sh"
+
 RUN sudo sed -i '/COMPRESSZST=/d' /etc/makepkg.conf
 RUN sudo bash -c "echo 'COMPRESSZST=(zstd -c -T0 --ultra -20 -)' >> /etc/makepkg.conf"
 RUN sudo useradd --no-create-home build && usermod -L build
