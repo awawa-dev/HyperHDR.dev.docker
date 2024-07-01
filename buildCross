@@ -34,6 +34,7 @@ RUN install_packages \
 	git \
 	libasound2-dev \
 	libegl-dev \
+	libflatbuffers-dev flatbuffers-compiler \
 	libftdi1-dev	\
 	libgl-dev \
 	libglvnd-dev \

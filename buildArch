@@ -15,6 +15,7 @@ RUN sudo pacman -S --noconfirm --needed \
 	qt5-base \
 	openssl \
 	cmake \
+	flatbuffers \
 	git \
 	alsa-lib \
 	gtk3 \
