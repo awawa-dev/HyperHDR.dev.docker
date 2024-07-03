@@ -16,8 +16,6 @@ jobs:
       packages: write    
     strategy:
       matrix:
-        architecture: [ arm-64bit-aarch64]
-        linuxVersion: [ bookworm]
         include:
           - architecture: x86_64
             linuxVersion: "ArchLinux"
