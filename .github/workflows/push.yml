@@ -3,7 +3,7 @@ name: HyperHdr Docker Builder
 on:
   push:
     branches:
-      - master
+      - test
 
 env:
   DEBIAN_TESTING: "bookworm"
