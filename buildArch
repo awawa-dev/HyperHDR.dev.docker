@@ -9,11 +9,9 @@ LABEL maintainer="HyperHDR" \
 
 # install HyperHDR deps packages
 RUN sudo cat /etc/makepkg.conf
-RUN sudo sed -i "OPTIONS/s/debug/!debug/g" /etc/makepkg.conf
-RUN sudo sed -i "OPTIONS/s/lto/!lto/g" /etc/makepkg.conf
-RUN sudo cat /etc/makepkg.conf
 RUN sudo pacman -Syy
 RUN sudo pacman -Syu --noconfirm
+RUN sudo cat /etc/makepkg.conf
 RUN sudo pacman -S --noconfirm --needed \
 	base-devel \
 	qt5-base \
@@ -45,6 +43,7 @@ RUN sudo pacman -S --noconfirm --needed \
 	pkgfile \
 	bash \
 	systemd-libs
+RUN sudo cat /etc/makepkg.conf	
 RUN sudo sed -i '/COMPRESSZST=/d' /etc/makepkg.conf
 RUN sudo bash -c "echo 'COMPRESSZST=(zstd -c -T0 --ultra -20 -)' >> /etc/makepkg.conf"
 RUN sudo useradd --no-create-home build && usermod -L build
