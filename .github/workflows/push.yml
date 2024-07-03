@@ -16,8 +16,8 @@ jobs:
       packages: write    
     strategy:
       matrix:
-        architecture: [ x86_64, arm-32bit-armv6l, arm-64bit-aarch64]
-        linuxVersion: [ bullseye, bookworm]
+        architecture: [ arm-64bit-aarch64]
+        linuxVersion: [ bookworm]
         include:
           - architecture: x86_64
             linuxVersion: "ArchLinux"
@@ -25,39 +25,6 @@ jobs:
             dockerSource: ""
             description: ArchLinux (x86_64)
             tool: buildArch
-          - architecture: x86_64
-            linuxVersion: "Fedora_40"
-            dockerOS: ""
-            dockerSource: "fedora:40"
-            description: "(x86_64)"
-            tool: buildFedora
-          - architecture: x86_64
-            dockerOS: Ubuntu
-            dockerSource: ubuntu
-            linuxVersion: jammy
-            description: Ubuntu 22.04 LTS (x86_64)
-            tool: buildNative
-          - architecture: x86_64
-            dockerOS: Ubuntu
-            dockerSource: ubuntu
-            linuxVersion: noble
-            description: Ubuntu 24.04 LTS (x86_64)
-            tool: buildNative
-          - architecture: x86_64
-            dockerOS: Debian
-            dockerSource: debian
-            description: (x86_64)
-            tool: buildNative
-          - architecture: arm-32bit-armv6l
-            dockerOS: Debian
-            dockerSource: raspberry-pi
-            description: (ARM 32bit armv6l)
-            tool: buildCross
-          - architecture: arm-64bit-aarch64
-            dockerOS: Debian
-            dockerSource: raspberrypi3-64
-            description: (ARM 64bit aarch64)
-            tool: buildCross
 
     steps:
       - name: Checkout

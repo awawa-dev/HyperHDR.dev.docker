@@ -8,6 +8,10 @@ LABEL maintainer="HyperHDR" \
 	org.opencontainers.image.vendor="HyperHDR"
 
 # install HyperHDR deps packages
+RUN sudo cat /etc/makepkg.conf
+RUN sudo sed -i "OPTIONS/s/debug/!debug/g" /etc/makepkg.conf
+RUN sudo sed -i "OPTIONS/s/lto/!lto/g" /etc/makepkg.conf
+RUN sudo cat /etc/makepkg.conf
 RUN sudo pacman -Syy
 RUN sudo pacman -Syu --noconfirm
 RUN sudo pacman -S --noconfirm --needed \
