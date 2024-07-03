@@ -44,8 +44,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	bash \
 	systemd-libs
 RUN sudo cat /etc/makepkg.conf
-RUN sudo sed -i "/OPTIONS/s/debug/!debug/g" /etc/makepkg.conf
-RUN sudo sed -i "/OPTIONS/s/lto/!lto/g" /etc/makepkg.conf
+RUN sudo sed -i "/OPTIONS/s/\sdebug\s/ !debug /g" /etc/makepkg.conf
+RUN sudo sed -i "/OPTIONS/s/\slto\s/ !lto /g" /etc/makepkg.conf
 RUN sudo cat /etc/makepkg.conf
 RUN sudo sed -i '/COMPRESSZST=/d' /etc/makepkg.conf
 RUN sudo bash -c "echo 'COMPRESSZST=(zstd -c -T0 --ultra -20 -)' >> /etc/makepkg.conf"
