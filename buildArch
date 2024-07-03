@@ -42,11 +42,12 @@ RUN sudo pacman -S --noconfirm --needed \
 	binutils \
 	pkgfile \
 	bash \
-	systemd-libs
-RUN sudo cat /etc/makepkg.conf
-RUN sudo sed -i "/OPTIONS/s/\sdebug\s/ !debug /g" /etc/makepkg.conf
-RUN sudo sed -i "/OPTIONS/s/\slto\s/ !lto /g" /etc/makepkg.conf
-RUN sudo cat /etc/makepkg.conf
+	systemd-libs \
+	wget
+
+RUN sudo sed -i "/OPTIONS/s/\sdebug/ !debug/g" /etc/makepkg.conf
+RUN sudo sed -i "/OPTIONS/s/\slto/ !lto/g" /etc/makepkg.conf
+RUN sudo cat /etc/makepkg.conf | grep OPTIONS
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
