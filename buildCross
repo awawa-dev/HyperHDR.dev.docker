@@ -51,7 +51,8 @@ RUN install_packages \
 	libx11-dev \
 	libzstd-dev \
 	python3-minimal \
-	qtbase5-dev
+	qtbase5-dev \
+	unzip
 	
 RUN install_packages libraspberrypi-dev || exit 0
 
@@ -60,7 +61,7 @@ COPY build.sh /scripts
 WORKDIR /scripts
 RUN chmod +x build.sh
 
-RUN [ "sh", "build.sh"]
+RUN bash -c "/scripts/build.sh"
 
 RUN if [ "$LINUX_ARCHITECTURE" = "arm-64bit-aarch64" ]; \
     then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint; \

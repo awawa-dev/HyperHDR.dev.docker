@@ -3,7 +3,7 @@ name: HyperHdr Docker Builder
 on:
   push:
     branches:
-      - master
+      - testing
 
 env:
   DEBIAN_TESTING: "bookworm"
@@ -80,7 +80,7 @@ jobs:
         run: |
           docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.altDockerSource }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
 
-      - name: Publish to GitHub Container & Package Registry
-        run: |
-          docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
+      #- name: Publish to GitHub Container & Package Registry
+      #  run: |
+      #    docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
 

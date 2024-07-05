@@ -39,7 +39,8 @@ RUN sudo dnf -y install \
 	pkg-config \
 	wget \
 	xz-devel \
-	systemd-devel
+	systemd-devel \
+	unzip
 
 RUN sudo dnf clean all
 

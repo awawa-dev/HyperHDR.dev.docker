@@ -40,7 +40,8 @@ RUN apt --assume-yes install \
 	pkg-config \
 	python3-minimal \
 	qtbase5-dev \
-	wget
+	wget \
+	unzip
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts

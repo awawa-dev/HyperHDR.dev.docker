@@ -40,7 +40,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	pkgfile \
 	bash \
 	systemd-libs \
-	wget
+	wget \
+	unzip
 
 RUN sudo sed -i "/OPTIONS/s/\sdebug/ !debug/g" /etc/makepkg.conf
 RUN sudo sed -i "/OPTIONS/s/\slto/ !lto/g" /etc/makepkg.conf
