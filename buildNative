@@ -38,13 +38,16 @@ RUN apt --assume-yes install \
 	libx11-dev \
 	libzstd-dev \
 	pkg-config \
-	python3-minimal \
 	qtbase5-dev \
-	wget
+	wget \
+	unzip \
+	pkg-config \	
+	python3
+#	python3-minimal
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
 WORKDIR /scripts
-RUN chmod +x build.sh
-RUN ./build.sh
+RUN chmod +x /scripts/build.sh
+RUN /scripts/build.sh
 

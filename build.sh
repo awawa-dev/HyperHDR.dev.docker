@@ -1,9 +1,101 @@
-#/bin/sh
+#!/bin/bash
 
-if cmake --version | grep -q '3.16.3'; then
-  apt update
-  apt remove cmake cmake-data
-  apt install cmake=3.13.4-1 cmake-data=3.13.4-1
+# ICU
+echo '------------------------------------------------- find libicudata -------------------------------------------------'
+for file in `find / -name libicu* -type f,l`; do echo $file; ls -la $file;done
+echo '------------------------------------------------- find libicudata -------------------------------------------------'
+ICUDATA=$(find /usr -name libicudata.so -type f,l)
+ICUDATA=`echo ${ICUDATA} | head -1`
+
+if [ -z "${ICUDATA}" ]; then
+	ICUDATA=$(find /usr -name libicudata.so.?? -type f,l)
+	ICUDATA=`echo ${ICUDATA} | head -1`
+fi
+
+if [ ! -z "${ICUDATA}" ]; then
+	ICUDATADIR=$(dirname "${ICUDATA}")
+	OLDICU=$(readlink "${ICUDATA}")
+	OLDICU_FILE=$(readlink -f "${ICUDATA}")
+
+	echo '--------------------------------------------- getting info libicudata ---------------------------------------------'
+	echo "ICUDATA = ${ICUDATA}"
+	echo "ICUDATADIR = ${ICUDATADIR}"
+	echo "OLDICU = ${OLDICU}"
+	echo "OLDICU_FILE = ${OLDICU_FILE}"
+	ls -la ${ICUDATADIR}/libicudata*
+
+	echo '--------------------------------------------- getting ldd libicudata ----------------------------------------------'
+	ldd --verbose ${OLDICU_FILE}
+	objdump -f ${OLDICU_FILE} || exit 0
+
+	echo '----------------------------------------------------- building libicudata -----------------------------------------'
+	
+	IFS='.'
+	read -r -a array <<< $OLDICU
+	IFS=$' \t\n'
+
+	if [ "${array[0]}" == "libicudata" ]; then
+		mkdir ICU
+		pushd ICU
+
+		ICU_MAJOR_VERSION=${array[2]}
+		ICU_MINOR_VERSION=${array[3]}
+		echo "ICU_MAJOR_VERSION=${ICU_MAJOR_VERSION}"
+		echo "ICU_MINOR_VERSION=${ICU_MINOR_VERSION}"
+
+		wget https://github.com/unicode-org/icu/releases/download/release-${ICU_MAJOR_VERSION}-${ICU_MINOR_VERSION}/icu4c-${ICU_MAJOR_VERSION}_${ICU_MINOR_VERSION}-src.tgz
+		wget https://github.com/unicode-org/icu/releases/download/release-${ICU_MAJOR_VERSION}-${ICU_MINOR_VERSION}/icu4c-${ICU_MAJOR_VERSION}_${ICU_MINOR_VERSION}-data.zip
+
+		tar -xvzf ./icu4c-${ICU_MAJOR_VERSION}_${ICU_MINOR_VERSION}-src.tgz
+		rm -rf ./icu/source/data
+		unzip icu4c-${ICU_MAJOR_VERSION}_${ICU_MINOR_VERSION}-data.zip -d ./icu/source
+		sed -i "s/LDFLAGSICUDT=-nodefaultlibs -nostdlib/LDFLAGSICUDT=/g" ./icu/source/config/mh-linux
+		echo '{"localeFilter": {"filterType": "language","whitelist": ["en"]}}' > filters.json
+		ICU_DATA_FILTER_FILE=filters.json ./icu/source/runConfigureICU Linux --enable-static
+		make -j $(nproc)
+
+		echo '------------------------------------------- replacing libicudata --------------------------------------------------'		
+		ls -la ${ICUDATADIR}/libicudata*		
+		rm -f ${ICUDATADIR}/libicudata.so
+		rm -f ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}
+		rm -f ${OLDICU_FILE}
+
+		echo '-------------------------------------------------------------------------------------------------------------------'				
+		ls -la lib/*
+
+		cp lib/libicudata.so.${ICU_MAJOR_VERSION}.${ICU_MINOR_VERSION} ${OLDICU_FILE}
+		ln -s ${OLDICU_FILE} ${ICUDATADIR}/libicudata.so
+		ln -s ${OLDICU_FILE} ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}
+
+		echo '-------------------------------------------------------------------------------------------------------------------'		
+		ls -la ${ICUDATADIR}/libicudata*
+		
+		rm /etc/ld.so.cache
+		ldconfig -v || exit 0
+		echo '------------------------------------------- replacing libicudata --------------------------------------------------'
+
+		popd
+		rm -rf ICU
+
+		echo '--------------------------------------------- purge ldconfig ------------------------------------------------------'
+		rm /etc/ld.so.cache
+		ldconfig -v || exit 0
+		echo '-------------------------------------------- verifying libicudata -------------------------------------------------'
+		ldd --verbose ${ICUDATADIR}/libicudata.so
+
+		echo '--------------------------------------------'
+		ldd --verbose ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}
+
+		echo '--------------------------------------------'
+		ldd --verbose ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}.${ICU_MINOR_VERSION}
+		objdump -f ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}.${ICU_MINOR_VERSION} || exit 0
+
+		echo '-------------------------------------------- verifying libicudata -------------------------------------------------'
+	else
+		echo "Not a libicudata: ${array[0]}"
+	fi
+else
+	echo "Could not find libicudata"
 fi
 
 # build and install ccache
@@ -37,7 +129,7 @@ if [ "$?" -ne "0" ]; then
   echo "CMake config failed"
   exit 1
 fi
-make
+make -j $(nproc)
 if [ "$?" -ne "0" ]; then
   echo "Make failed"
   exit 1
@@ -53,4 +145,3 @@ if [ "$?" -ne "0" ]; then
   echo "Clean up failed"
   exit 1
 fi
-
