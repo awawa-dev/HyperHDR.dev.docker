@@ -63,9 +63,10 @@ if [ ! -z "${ICUDATA}" ]; then
 		echo '-------------------------------------------------------------------------------------------------------------------'				
 		ls -la lib/*
 
-		cp lib/libicudata.so.${ICU_MAJOR_VERSION}.${ICU_MINOR_VERSION} ${OLDICU_FILE}
-		ln -s ${OLDICU_FILE} ${ICUDATADIR}/libicudata.so
-		ln -s ${OLDICU_FILE} ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}
+		FINAL_ICUDATA="libicudata.so.${ICU_MAJOR_VERSION}.${ICU_MINOR_VERSION}"
+		cp lib/${FINAL_ICUDATA} ${OLDICU_FILE}
+		ln -s ${FINAL_ICUDATA} ${ICUDATADIR}/libicudata.so
+		ln -s ${FINAL_ICUDATA} ${ICUDATADIR}/libicudata.so.${ICU_MAJOR_VERSION}
 
 		echo '-------------------------------------------------------------------------------------------------------------------'		
 		ls -la ${ICUDATADIR}/libicudata*
