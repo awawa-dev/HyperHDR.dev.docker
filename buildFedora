@@ -17,7 +17,8 @@ LABEL maintainer="HyperHDR" \
 RUN sudo dnf -y upgrade
 RUN sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
 RUN sudo dnf -y install \
-	cmake \
+	chrpath \
+	cmake \	
 	git \
 	alsa-lib-devel \
 	flatbuffers-devel flatbuffers-compiler \
