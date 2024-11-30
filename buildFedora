@@ -15,7 +15,7 @@ LABEL maintainer="HyperHDR" \
 
 # install hyperhdr deps packages
 RUN sudo dnf -y upgrade
-RUN sudo dnf -y group install "C Development Tools and Libraries" "Development Tools"
+RUN sudo dnf -y install @c-development @development-tools
 RUN sudo dnf -y install \
 	chrpath \
 	cmake \	

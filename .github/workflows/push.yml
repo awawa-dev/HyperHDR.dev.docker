@@ -26,9 +26,9 @@ jobs:
             description: ArchLinux (x86_64)
             tool: buildArch
           - architecture: x86_64
-            linuxVersion: "Fedora_40"
+            linuxVersion: "Fedora_41"
             dockerOS: ""
-            dockerSource: "fedora:40"
+            dockerSource: "fedora:41"
             description: "(x86_64)"
             tool: buildFedora
           - architecture: x86_64
@@ -43,6 +43,12 @@ jobs:
             linuxVersion: noble
             description: Ubuntu 24.04 LTS (x86_64)
             tool: buildNative
+          - architecture: x86_64
+            dockerOS: Ubuntu
+            dockerSource: ubuntu
+            linuxVersion: oracular
+            description: Ubuntu 24.10 (x86_64)
+            tool: buildNative            
           - architecture: x86_64
             dockerOS: Debian
             dockerSource: debian
