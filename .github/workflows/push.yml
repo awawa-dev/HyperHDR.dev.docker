@@ -13,6 +13,7 @@ jobs:
       packages: write    
     strategy:
       matrix:
+        architecture: [ x86_64, arm-32bit-armv6l, arm-64bit-aarch64, arm-32bit-armv6l-native, arm-64bit-aarch64-native]
         linuxVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
