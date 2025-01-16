@@ -2,70 +2,93 @@ name: HyperHdr Docker Builder
 
 on:
   push:
-    branches:
-      - master
-
-env:
-  DEBIAN_TESTING: "bookworm"
+    #branches:
+      #- master
 
 jobs:
   Docker:
     name: ${{ matrix.dockerOS }} ${{ matrix.linuxVersion }} ${{ matrix.description }}
-    runs-on: Ubuntu-22.04
+    runs-on: ${{ matrix.runner }}
     permissions:
       packages: write    
     strategy:
       matrix:
-        architecture: [ x86_64, arm-32bit-armv6l, arm-64bit-aarch64]
         linuxVersion: [ bullseye, bookworm]
         include:
-          - architecture: x86_64
+          - runner: ubuntu-24.04
+            architecture: x86_64
             linuxVersion: "ArchLinux"
             dockerOS: ""
             dockerSource: ""
             description: ArchLinux (x86_64)
             tool: buildArch
-          - architecture: x86_64
+          - runner: ubuntu-24.04
+            architecture: x86_64
             linuxVersion: "Fedora_41"
             dockerOS: ""
             dockerSource: "fedora:41"
             description: "(x86_64)"
             tool: buildFedora
-          - architecture: x86_64
+          - runner: ubuntu-24.04
+            architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
             linuxVersion: jammy
             description: Ubuntu 22.04 LTS (x86_64)
             tool: buildNative
-          - architecture: x86_64
+          - runner: ubuntu-24.04
+            architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
             linuxVersion: noble
             description: Ubuntu 24.04 LTS (x86_64)
             tool: buildNative
-          - architecture: x86_64
+          - runner: ubuntu-24.04
+            architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
             linuxVersion: oracular
             description: Ubuntu 24.10 (x86_64)
             tool: buildNative            
-          - architecture: x86_64
+          - runner: ubuntu-24.04
+            architecture: x86_64
             dockerOS: Debian
             dockerSource: debian
             description: (x86_64)
             tool: buildNative
-          - architecture: arm-32bit-armv6l
+          - runner: ubuntu-24.04
+            architecture: arm-32bit-armv6l
             dockerOS: Debian
             dockerSource: raspberry-pi
             description: (ARM 32bit armv6l)
             tool: buildCross
-          - architecture: arm-64bit-aarch64
+          - runner: ubuntu-24.04
+            architecture: arm-64bit-aarch64
             dockerOS: Debian
             dockerSource: raspberrypi3-64
             description: (ARM 64bit aarch64)
             tool: buildCross
-
+          - runner: ubuntu-24.04-arm
+            architecture: arm-32bit-armv6l-native
+            dockerOS: Debian
+            dockerSource: balenalib/raspberry-pi
+            dockerSufix: -build
+            description: (native ARM 32bit armv6l)
+            tool: buildNative
+          - runner: ubuntu-24.04-arm
+            architecture: arm-64bit-aarch64-native
+            dockerOS: Debian
+            dockerSource: balenalib/raspberrypi3-64
+            dockerSufix: -build
+            description: (native ARM 64bit aarch64)
+            tool: buildNative
     steps:
+      # start docker
+      - name: Install docker
+        if: matrix.runner == 'ubuntu-24.04-arm'
+        run: |
+          sudo systemctl start docker
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -77,14 +100,8 @@ jobs:
                 password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker container
-        if: matrix.linuxVersion != env.DEBIAN_TESTING || matrix.altDockerSource ==''
         run: |
-          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.dockerSource }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
-
-      - name: Build Debian (next version) docker container
-        if: matrix.linuxVersion == env.DEBIAN_TESTING && matrix.altDockerSource !=''
-        run: |
-          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.altDockerSource }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
+          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.dockerSource }} --build-arg DOCKER_SUFIX=${{ matrix.dockerSufix }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
 
       - name: Publish to GitHub Container & Package Registry
         run: |
