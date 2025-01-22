@@ -43,7 +43,8 @@ RUN apt --assume-yes install \
 	unzip \
 	pkg-config \	
 	python3
-#	python3-minimal
+
+RUN apt --assume-yes install libcec-dev libp8-platform-dev || true
 
 RUN mkdir -p /scripts
 COPY build.sh /scripts
