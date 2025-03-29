@@ -42,7 +42,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	bash \
 	systemd-libs \
 	wget \
-	unzip
+	unzip \
+	sdbus-cpp
 
 RUN sudo sed -i "/OPTIONS/s/\sdebug/ !debug/g" /etc/makepkg.conf
 RUN sudo sed -i "/OPTIONS/s/\slto/ !lto/g" /etc/makepkg.conf
