@@ -2,15 +2,13 @@
 
 # QT 6.8 LTS
 git clone --branch v6.8.3 https://github.com/qt/qtbase.git qt_lts
-mkdir qt_build
-cd qt_build
-../qt_lts/configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
+cd qt_lts
+./qt_lts/configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
 cmake --build . --parallel
 cmake --install .
 
 cd ..
 rm -r qt_lts
-rm -r qt_build
 
 # ICU
 echo '------------------------------------------------- find libicudata -------------------------------------------------'
