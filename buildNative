@@ -30,7 +30,6 @@ RUN apt --assume-yes install \
 	libglvnd-dev \
 	liblzma-dev \
 	libpipewire-0.3-dev \
-	libqt5serialport5-dev \
 	libssl-dev \
 	libsystemd-dev \
 	libturbojpeg0-dev \
@@ -38,11 +37,11 @@ RUN apt --assume-yes install \
 	libx11-dev \
 	libzstd-dev \
 	pkg-config \
-	qtbase5-dev \
 	wget \
 	unzip \
 	pkg-config \	
-	python3
+	python3 \
+	ninja
 
 RUN apt --assume-yes install libcec-dev libp8-platform-dev || true
 

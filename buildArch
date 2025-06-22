@@ -12,7 +12,6 @@ RUN sudo pacman -Syy
 RUN sudo pacman -Syu --noconfirm
 RUN sudo pacman -S --noconfirm --needed \
 	base-devel \
-	qt5-base \
 	openssl \
 	chrpath \	
 	cmake \
@@ -24,7 +23,6 @@ RUN sudo pacman -S --noconfirm --needed \
 	libftdi \
 	libglvnd \
 	libjpeg-turbo \
-	qt5-serialport \
 	wayland \
 	libx11 \
 	freetds \
@@ -43,7 +41,8 @@ RUN sudo pacman -S --noconfirm --needed \
 	systemd-libs \
 	wget \
 	unzip \
-	sdbus-cpp
+	sdbus-cpp \
+	ninja
 
 RUN sudo sed -i "/OPTIONS/s/\sdebug/ !debug/g" /etc/makepkg.conf
 RUN sudo sed -i "/OPTIONS/s/\slto/ !lto/g" /etc/makepkg.conf

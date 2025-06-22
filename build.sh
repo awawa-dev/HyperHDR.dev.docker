@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# QT 6.8 LTS
+git clone --branch v6.8.3 https://github.com/qt/qtbase.git qt_lts
+cd qt_lts
+mkdir build
+cd build
+../configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
+cmake --build . --parallel
+cmake --install .
+
+cd ../..
+rm -r qt_lts
+if [ "$?" -ne "0" ]; then
+  echo "Clean up failed (qt)"
+  exit 1
+fi
+
 # ICU
 echo '------------------------------------------------- find libicudata -------------------------------------------------'
 for file in `find / -name libicu* -type f,l`; do echo $file; ls -la $file;done
