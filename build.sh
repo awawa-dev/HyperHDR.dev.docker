@@ -4,7 +4,8 @@
 git clone --branch v6.8.3 https://github.com/qt/qtbase.git qt_lts
 mkdir qt_build
 cd qt_build
-../qt_lts/configure -submodules qtbase,qtnetwork,qtserialport
+../qt_lts/configure -h
+../qt_lts/configure -submodules qtbase,qtnetwork,qtserialport -no-sbom
 if [ "$?" -ne "0" ]; then
   echo "Qt configuration failed"
   exit 1
