@@ -2,19 +2,15 @@
 
 # QT 6.8 LTS
 git clone --branch v6.8.3 https://github.com/qt/qtbase.git qt_lts
-cd qt_lts
-mkdir build
-cd build
-../configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
+mkdir qt_build
+cd qt_build
+../qt_lts/configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
 cmake --build . --parallel
 cmake --install .
 
-cd ../..
+cd ..
 rm -r qt_lts
-if [ "$?" -ne "0" ]; then
-  echo "Clean up failed (qt)"
-  exit 1
-fi
+rm -r qt_build
 
 # ICU
 echo '------------------------------------------------- find libicudata -------------------------------------------------'
