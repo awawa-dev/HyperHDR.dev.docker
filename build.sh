@@ -1,11 +1,12 @@
 #!/bin/bash
 
 # QT 6.8 LTS
-git clone --branch v6.8.3 https://github.com/qt/qtbase.git qt_lts
+qt_version="6.8.3"
+git clone --branch v${qt_version} https://github.com/qt/qtbase.git qt_lts
 mkdir qt_build
 cd qt_build
 ../qt_lts/configure -h
-../qt_lts/configure -submodules qtbase,qtnetwork,qtserialport -no-sbom -no-dbus -no-gui -no-widgets -no-sql-sqlite -no-icu -nomake tests -nomake examples
+../qt_lts/configure -submodules qtbase,qtnetwork,qtserialport -no-sbom -no-dbus -no-gui -no-widgets -no-sql-sqlite -no-icu -skip qtsql -skip qtxml -nomake tests -nomake examples
 if [ "$?" -ne "0" ]; then
   echo "Qt configuration failed"
   exit 1
@@ -32,6 +33,58 @@ if [ "$?" -ne "0" ]; then
   echo "Qt clean failed (2)"
   exit 1
 fi
+
+export Qt6_DIR=/usr/local/Qt-${qt_version}/lib/cmake/Qt6/
+
+# CCACHE
+ccache_version="4.10.1"
+
+mkdir ccache
+cd ccache
+
+wget "https://github.com/ccache/ccache/releases/download/v${ccache_version}/ccache-${ccache_version}.tar.gz"
+if [ "$?" -ne "0" ]; then
+  echo "Could not download ccache sources"
+  exit 1
+fi
+
+tar -zxvf "ccache-${ccache_version}.tar.gz"
+if [ "$?" -ne "0" ]; then
+  echo "Extracting of ccache failed"
+  exit 1
+fi
+
+cd "ccache-${ccache_version}"
+if [ "$?" -ne "0" ]; then
+  echo "Missing ccache folder"
+  exit 1
+fi
+
+mkdir build
+cd build
+cmake -DHIREDIS_FROM_INTERNET=ON -DCMAKE_BUILD_TYPE=Release ..
+if [ "$?" -ne "0" ]; then
+  echo "CMake config failed"
+  exit 1
+fi
+make -j $(nproc)
+if [ "$?" -ne "0" ]; then
+  echo "Make failed"
+  exit 1
+fi
+make install
+if [ "$?" -ne "0" ]; then
+  echo "Make install failed"
+  exit 1
+fi
+cd ../../..
+rm -r ccache
+if [ "$?" -ne "0" ]; then
+  echo "Clean up failed"
+  exit 1
+fi
+
+exit 0
 
 # ICU
 echo '------------------------------------------------- find libicudata -------------------------------------------------'
