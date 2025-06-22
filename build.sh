@@ -2,6 +2,8 @@
 
 # QT 6.8 LTS
 qt_version="6.8.3"
+export Qt6_DIR=/usr/local/Qt-${qt_version}/lib/cmake/Qt6/
+export
 git clone --branch v${qt_version} https://github.com/qt/qtbase.git qt_lts
 mkdir qt_build
 cd qt_build
@@ -33,8 +35,6 @@ if [ "$?" -ne "0" ]; then
   echo "Qt clean failed (2)"
   exit 1
 fi
-
-export Qt6_DIR=/usr/local/Qt-${qt_version}/lib/cmake/Qt6/
 
 # CCACHE
 ccache_version="4.10.1"
