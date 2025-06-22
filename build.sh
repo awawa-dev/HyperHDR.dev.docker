@@ -3,8 +3,16 @@
 # QT 6.8 LTS
 git clone --branch v6.8.3 https://github.com/qt/qtbase.git qt_lts
 cd qt_lts
-./qt_lts/configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
+./configure -init-submodules -submodules qtbase,qtnetwork,qtserialport
+if [ "$?" -ne "0" ]; then
+  echo "Qt configuration failed"
+  exit 1
+fi
 cmake --build . --parallel
+if [ "$?" -ne "0" ]; then
+  echo "Qt build failed"
+  exit 1
+fi
 cmake --install .
 
 cd ..
