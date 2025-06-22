@@ -40,7 +40,7 @@ RUN sudo dnf -y install \
 	xz-devel \
 	systemd-devel \
 	unzip \
-	ninja
+	ninja-build
 
 RUN sudo dnf clean all
 

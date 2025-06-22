@@ -53,7 +53,7 @@ RUN apt --assume-yes install \
 	unzip \
 	pkg-config \
 	python3 \
-	ninja
+	ninja-build
 
 RUN apt --assume-yes install libraspberrypi-dev || exit 0
 
