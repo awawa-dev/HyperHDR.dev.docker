@@ -51,12 +51,12 @@ jobs:
         #     linuxVersion: oracular
         #     description: Ubuntu 24.10 (x86_64)
         #     tool: buildNative            
-        #   - runner: ubuntu-24.04
-        #     architecture: x86_64
-        #     dockerOS: Debian
-        #     dockerSource: debian
-        #     description: (x86_64)
-        #     tool: buildNative
+            - runner: ubuntu-24.04
+              architecture: x86_64
+              dockerOS: Debian
+              dockerSource: debian
+              description: (x86_64)
+              tool: buildNative
         #   - runner: ubuntu-24.04
         #     architecture: arm-32bit-armv6l
         #     dockerOS: Debian
