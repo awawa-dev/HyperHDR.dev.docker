@@ -11,7 +11,7 @@ if [ "$?" -ne "0" ]; then
   echo "Qt configuration failed"
   exit 1
 fi
-cmake --build . # --parallel
+cmake --build . --parallel
 if [ "$?" -ne "0" ]; then
   echo "Qt build failed"
   exit 1
