@@ -13,7 +13,7 @@ jobs:
       packages: write    
     strategy:
       matrix:
-        architecture: [ x86_64, arm-64bit-aarch64, arm-64bit-aarch64-native]
+        architecture: [ x86_64, arm-32bit-armv6l, arm-64bit-aarch64, arm-32bit-armv6l-native, arm-64bit-aarch64-native]
         linuxVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
@@ -70,19 +70,19 @@ jobs:
             dockerSufix: -build
             description: (native ARM 64bit aarch64)
             tool: buildNative
-          # - runner: ubuntu-24.04
-          #   architecture: arm-32bit-armv6l
-          #   dockerOS: Debian
-          #   dockerSource: raspberry-pi
-          #   description: (ARM 32bit armv6l)
-          #   tool: buildCross
-          # - runner: ubuntu-24.04-arm
-          #   architecture: arm-32bit-armv6l-native
-          #   dockerOS: Debian
-          #   dockerSource: balenalib/raspberry-pi
-          #   dockerSufix: -build
-          #   description: (native ARM 32bit armv6l)
-          #   tool: buildNative
+          - runner: ubuntu-24.04
+            architecture: arm-32bit-armv6l
+            dockerOS: Debian
+            dockerSource: raspberry-pi
+            description: (ARM 32bit armv6l)
+            tool: buildCross
+          - runner: ubuntu-24.04-arm
+            architecture: arm-32bit-armv6l-native
+            dockerOS: Debian
+            dockerSource: balenalib/raspberry-pi
+            dockerSufix: -build
+            description: (native ARM 32bit armv6l)
+            tool: buildNative
 
     steps:
       # start docker
