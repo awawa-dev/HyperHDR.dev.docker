@@ -2,8 +2,8 @@
 
 # QT 6.8 LTS
 qt_version="6.8.3"
-echo "export Qt6_DIR=/usr/local/Qt-${qt_version}/lib/cmake/Qt6/" >> /etc/bash.bashrc
-cat /etc/bash.bashrc
+echo "export Qt6_DIR=/usr/local/Qt-${qt_version}/lib/cmake/Qt6/" >> ~/.bashrc
+cat ~/.bashrc
 git clone --branch v${qt_version} https://github.com/qt/qtbase.git qt_lts
 mkdir qt_build
 cd qt_build
