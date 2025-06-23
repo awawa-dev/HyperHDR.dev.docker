@@ -61,7 +61,7 @@ RUN mkdir -p /scripts
 COPY build.sh /scripts
 WORKDIR /scripts
 RUN chmod +x /scripts/build.sh
-RUN /scripts/build.sh
+RUN export NINJAFLAGS=-j1 && /scripts/build.sh
 
 RUN if [ "$LINUX_ARCHITECTURE" = "arm-64bit-aarch64" ]; \
     then ln -s /usr/bin/qemu-aarch64-static /scripts/entrypoint; \
