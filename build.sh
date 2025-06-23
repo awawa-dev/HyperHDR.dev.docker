@@ -36,7 +36,7 @@ if [ "$?" -ne "0" ]; then
 fi
 
 # CCACHE
-ccache_version="4.10.1"
+ccache_version="4.11.3"
 
 mkdir ccache
 cd ccache
