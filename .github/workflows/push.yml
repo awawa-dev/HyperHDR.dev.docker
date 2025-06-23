@@ -48,8 +48,8 @@ jobs:
             architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
-            linuxVersion: oracular
-            description: Ubuntu 24.10 (x86_64)
+            linuxVersion: plucky
+            description: Ubuntu 25.04 (x86_64)
             tool: buildNative            
           - runner: ubuntu-24.04
             architecture: x86_64
