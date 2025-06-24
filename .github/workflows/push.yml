@@ -83,7 +83,12 @@ jobs:
             description: (native ARM 32bit armv6l)
             tool: buildNative
 
-    steps:            
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          sparse-checkout: .github  
+            
       - name: Build and push HyperHDR docker
         uses: ./.github/actions/build_push_docker
         with:
