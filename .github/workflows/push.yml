@@ -55,12 +55,6 @@ jobs:
             dockerSource: debian
             description: (x86_64)
             tool: buildNative
-          - runner: ubuntu-24.04
-            architecture: arm-64bit-aarch64
-            dockerOS: Debian
-            dockerSource: raspberrypi3-64
-            description: (ARM 64bit aarch64)
-            tool: buildCross
           - runner: ubuntu-24.04-arm
             architecture: arm-64bit-aarch64-native
             dockerOS: Debian
@@ -68,12 +62,6 @@ jobs:
             dockerSufix: -build
             description: (native ARM 64bit aarch64)
             tool: buildNative
-          - runner: ubuntu-24.04
-            architecture: arm-32bit-armv6l
-            dockerOS: Debian
-            dockerSource: raspberry-pi
-            description: (ARM 32bit armv6l)
-            tool: buildCross
           - runner: ubuntu-24.04-arm
             architecture: arm-32bit-armv6l-native
             dockerOS: Debian
