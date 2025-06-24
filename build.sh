@@ -21,6 +21,12 @@ if [ "$?" -ne "0" ]; then
   exit 1
 fi
 
+rm -r * .*
+git clone --branch v${qt_version} https://github.com/qt/qtserialport.git qtserialport
+cmake -DCMAKE_BUILD_TYPE=Release ./qtserialport
+make -j $(nproc)
+cmake --install . --prefix /usr
+
 cd ..
 rm -r qt_lts
 if [ "$?" -ne "0" ]; then
