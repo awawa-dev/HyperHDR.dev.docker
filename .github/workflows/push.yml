@@ -12,7 +12,7 @@ jobs:
     permissions:
       packages: write    
     strategy:
-      max-parallel: 4
+      max-parallel: 5
       matrix:
         architecture: [ x86_64, arm-32bit-armv6l, arm-64bit-aarch64, arm-32bit-armv6l-native, arm-64bit-aarch64-native]
         linuxVersion: [ bullseye, bookworm]
