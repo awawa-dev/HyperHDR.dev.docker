@@ -90,7 +90,7 @@ jobs:
       - name: Build and push HyperHDR docker
         uses: ./.github/actions/build_push_docker
         with:
-          build_args: ${{ matrix.tool }}
+          file: ${{ matrix.tool }}
           docker_tag: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
           build_args: |
             LINUX_VERSION=${{ matrix.linuxVersion }}
