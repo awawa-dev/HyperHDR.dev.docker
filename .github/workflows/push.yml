@@ -90,6 +90,8 @@ jobs:
       - name: Build and push HyperHDR docker
         uses: ./.github/actions/build_push_docker
         with:
+          registry_username: ${{ github.actor }}
+          registry_password: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ matrix.tool }}
           docker_tag: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
           build_args: |
