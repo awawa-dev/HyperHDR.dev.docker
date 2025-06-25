@@ -73,63 +73,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-        with:
-          sparse-checkout: .github  
-            
-      - name: Build and push HyperHDR docker
-        uses: ./.github/actions/build_push_docker
-        with:
-          registry_username: ${{ github.actor }}
-          registry_password: ${{ secrets.GITHUB_TOKEN }}
-          docker_file: ${{ matrix.tool }}
-          docker_tag: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
-          build_args: |
-            LINUX_VERSION=${{ matrix.linuxVersion }}
-            LINUX_ARCHITECTURE=${{ matrix.architecture }}
-            DOCKER_SOURCE=${{ matrix.dockerSource }}
-            DOCKER_SUFIX=${{ matrix.dockerSufix }}
-            BUILD_DESC="${{ matrix.description }}"
 
-  QEMU-Dockers:
-    name: ${{ matrix.dockerOS }} ${{ matrix.linuxVersion }} ${{ matrix.description }}
-    runs-on: ${{ matrix.runner }}
-    permissions:
-      packages: write    
-    strategy:
-      max-parallel: 1
-      matrix:
-        architecture: [ arm-32bit-armv6l, arm-64bit-aarch64]
-        linuxVersion: [ bullseye, bookworm]
-        include:          
-          - runner: ubuntu-24.04
-            architecture: arm-64bit-aarch64
-            dockerOS: Debian
-            dockerSource: raspberrypi3-64
-            description: (ARM 64bit aarch64)
-            tool: buildCross
-          - runner: ubuntu-24.04
-            architecture: arm-32bit-armv6l
-            dockerOS: Debian
-            dockerSource: raspberry-pi
-            description: (ARM 32bit armv6l)
-            tool: buildCross
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.6.0
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
+      - name: Install Docker Buildx
+        uses: docker/setup-buildx-action@v3.11.1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3.4
         with:
-          sparse-checkout: .github  
-            
-      - name: Build and push HyperHDR docker
-        uses: ./.github/actions/build_push_docker
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & push docker container
+        uses: docker/build-push-action@v6.18.0
         with:
-          registry_username: ${{ github.actor }}
-          registry_password: ${{ secrets.GITHUB_TOKEN }}
-          docker_file: ${{ matrix.tool }}
-          docker_tag: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
-          build_args: |
-            LINUX_VERSION=${{ matrix.linuxVersion }}
-            LINUX_ARCHITECTURE=${{ matrix.architecture }}
-            DOCKER_SOURCE=${{ matrix.dockerSource }}
-            DOCKER_SUFIX=${{ matrix.dockerSufix }}
-            BUILD_DESC="${{ matrix.description }}"
+          context: .
+          push: true
+          file: ${{ matrix.tool }}
+          tags: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
+          build-args: |
+              LINUX_VERSION=${{ matrix.linuxVersion }}
+              LINUX_ARCHITECTURE=${{ matrix.architecture }}
+              DOCKER_SOURCE=${{ matrix.dockerSource }}
+              DOCKER_SUFIX=${{ matrix.dockerSufix }}
+              BUILD_DESC="${{ matrix.description }}"
