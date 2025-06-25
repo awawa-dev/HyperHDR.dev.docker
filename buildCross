@@ -51,6 +51,7 @@ RUN apt --assume-yes install \
 	libzstd-dev \
 	wget \
 	unzip \
+	patchelf \
 	pkg-config \
 	python3 \
 	ninja-build

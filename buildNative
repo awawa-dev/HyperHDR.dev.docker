@@ -36,6 +36,7 @@ RUN apt --assume-yes install \
 	libusb-1.0-0-dev \
 	libx11-dev \
 	libzstd-dev \
+	patchelf \
 	pkg-config \
 	wget \
 	unzip \

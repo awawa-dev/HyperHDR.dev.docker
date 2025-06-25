@@ -5,7 +5,7 @@ qt_version="6.8.3"
 git clone --branch v${qt_version} https://github.com/qt/qtbase.git qt_lts
 mkdir qt_build
 cd qt_build
-../qt_lts/configure -prefix /usr -bindir /usr/qt_${qt_version}_bin -headerdir /usr/qt_${qt_version}_include -archdatadir /usr/qt_${qt_version} -datadir /usr/qt_${qt_version} -submodules qtbase,qtnetwork -no-sbom -no-dbus -no-gui -no-widgets -no-sql-sqlite -no-icu -skip qtsql -skip qtxml -nomake tests -nomake examples
+../qt_lts/configure -prefix /usr -bindir /usr/qt_${qt_version}_bin -headerdir /usr/qt_${qt_version}_include -hostdatadir /usr/qt_${qt_version}_host -archdatadir /usr/qt_${qt_version} -datadir /usr/qt_${qt_version} -submodules qtbase,qtnetwork -no-sbom -no-dbus -no-gui -no-widgets -no-sql-sqlite -no-icu -skip qtsql -skip qtxml -nomake tests -nomake examples
 if [ "$?" -ne "0" ]; then
   echo "Qt configuration failed"
   exit 1
@@ -33,7 +33,7 @@ if [ "$?" -ne "0" ]; then
   echo "Qt serialport build failed"
   exit 1
 fi
-cmake --install . --prefix /usr
+cmake --install .
 if [ "$?" -ne "0" ]; then
   echo "Qt serialport install failed"
   exit 1
