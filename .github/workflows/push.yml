@@ -2,18 +2,16 @@ name: HyperHdr Docker Builder
 
 on:
   push:
-    branches:
-      - master
 
 jobs:
-  Docker:
+  Native-Dockers:
     name: ${{ matrix.dockerOS }} ${{ matrix.linuxVersion }} ${{ matrix.description }}
     runs-on: ${{ matrix.runner }}
     permissions:
       packages: write    
     strategy:
       matrix:
-        architecture: [ x86_64, arm-32bit-armv6l, arm-64bit-aarch64, arm-32bit-armv6l-native, arm-64bit-aarch64-native]
+        architecture: [ x86_64, arm-32bit-armv6l-native, arm-64bit-aarch64-native]
         linuxVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
@@ -25,9 +23,9 @@ jobs:
             tool: buildArch
           - runner: ubuntu-24.04
             architecture: x86_64
-            linuxVersion: "Fedora_41"
+            linuxVersion: "Fedora_42"
             dockerOS: ""
-            dockerSource: "fedora:41"
+            dockerSource: "fedora:42"
             description: "(x86_64)"
             tool: buildFedora
           - runner: ubuntu-24.04
@@ -48,33 +46,14 @@ jobs:
             architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
-            linuxVersion: oracular
-            description: Ubuntu 24.10 (x86_64)
+            linuxVersion: plucky
+            description: Ubuntu 25.04 (x86_64)
             tool: buildNative            
           - runner: ubuntu-24.04
             architecture: x86_64
             dockerOS: Debian
             dockerSource: debian
             description: (x86_64)
-            tool: buildNative
-          - runner: ubuntu-24.04
-            architecture: arm-32bit-armv6l
-            dockerOS: Debian
-            dockerSource: raspberry-pi
-            description: (ARM 32bit armv6l)
-            tool: buildCross
-          - runner: ubuntu-24.04
-            architecture: arm-64bit-aarch64
-            dockerOS: Debian
-            dockerSource: raspberrypi3-64
-            description: (ARM 64bit aarch64)
-            tool: buildCross
-          - runner: ubuntu-24.04-arm
-            architecture: arm-32bit-armv6l-native
-            dockerOS: Debian
-            dockerSource: balenalib/raspberry-pi
-            dockerSufix: -build
-            description: (native ARM 32bit armv6l)
             tool: buildNative
           - runner: ubuntu-24.04-arm
             architecture: arm-64bit-aarch64-native
@@ -83,28 +62,41 @@ jobs:
             dockerSufix: -build
             description: (native ARM 64bit aarch64)
             tool: buildNative
-    steps:
-      # start docker
-      - name: Install docker
-        if: matrix.runner == 'ubuntu-24.04-arm'
-        run: |
-          sudo systemctl start docker
+          - runner: ubuntu-24.04-arm
+            architecture: arm-32bit-armv6l-native
+            dockerOS: Debian
+            dockerSource: balenalib/raspberry-pi
+            dockerSufix: -build
+            description: (native ARM 32bit armv6l)
+            tool: buildNative
 
+    steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.6.0
+
+      - name: Install Docker Buildx
+        uses: docker/setup-buildx-action@v3.11.1
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.4
         with:
-                registry: ghcr.io
-                username: ${{ github.actor }}
-                password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build docker container
-        run: |
-          docker build -t ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }} --build-arg LINUX_VERSION=${{ matrix.linuxVersion }} --build-arg LINUX_ARCHITECTURE=${{ matrix.architecture }} --build-arg DOCKER_SOURCE=${{ matrix.dockerSource }} --build-arg DOCKER_SUFIX=${{ matrix.dockerSufix }} --build-arg BUILD_DESC="${{ matrix.description }}" -f ${{ matrix.tool }} .
-
-      - name: Publish to GitHub Container & Package Registry
-        run: |
-          docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
-
+      - name: Build & push docker container
+        uses: docker/build-push-action@v6.18.0
+        with:
+          context: .
+          push: true
+          file: ${{ matrix.tool }}
+          tags: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
+          build-args: |
+              LINUX_VERSION=${{ matrix.linuxVersion }}
+              LINUX_ARCHITECTURE=${{ matrix.architecture }}
+              DOCKER_SOURCE=${{ matrix.dockerSource }}
+              DOCKER_SUFIX=${{ matrix.dockerSufix }}
+              BUILD_DESC="${{ matrix.description }}"

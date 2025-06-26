@@ -30,8 +30,6 @@ RUN sudo dnf -y install \
 	libayatana-appindicator-gtk3-devel \	
 	libglvnd-devel \	
 	pipewire-devel \
-	qt5-qtserialport-devel \
-	qt5-qtbase-devel \
 	openssl-devel \
 	turbojpeg-devel \
 	libusb1-devel \
@@ -41,7 +39,8 @@ RUN sudo dnf -y install \
 	wget \
 	xz-devel \
 	systemd-devel \
-	unzip
+	unzip \
+	ninja-build
 
 RUN sudo dnf clean all
 
