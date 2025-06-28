@@ -76,7 +76,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
+          images: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}
+          tags: |
+            type=raw,,value=${{ matrix.distroVersion }} 
           labels: |
             maintainer=HyperHDR
             org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})"
