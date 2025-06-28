@@ -1,17 +1,4 @@
-ARG LINUX_VERSION
-ARG DOCKER_SOURCE
-ARG BUILD_DESC
 FROM ${DOCKER_SOURCE}
-ARG LINUX_VERSION
-ARG DOCKER_SOURCE
-ARG BUILD_DESC
-
-LABEL maintainer="HyperHDR" \
-	org.opencontainers.image.title="${LINUX_VERSION}" \
-	org.opencontainers.image.description="HyperHDR build environment for ${LINUX_VERSION}" \
-	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
-	org.opencontainers.image.vendor="HyperHDR"
 
 # install hyperhdr deps packages
 RUN sudo dnf -y upgrade

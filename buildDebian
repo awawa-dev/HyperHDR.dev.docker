@@ -1,17 +1,4 @@
-ARG LINUX_VERSION
-ARG DOCKER_SOURCE
-ARG BUILD_DESC
-FROM ${DOCKER_SOURCE}:${LINUX_VERSION}
-ARG LINUX_VERSION
-ARG DOCKER_SOURCE
-ARG BUILD_DESC
-
-LABEL maintainer="HyperHDR" \
-	org.opencontainers.image.title="${DOCKER_SOURCE} (${LINUX_VERSION})" \
-	org.opencontainers.image.description="HyperHDR build environment ${BUILD_DESC}" \
-	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
-	org.opencontainers.image.vendor="HyperHDR"
+FROM ${DOCKER_SOURCE}
 
 # install hyperhdr deps packages
 RUN apt update

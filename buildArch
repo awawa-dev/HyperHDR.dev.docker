@@ -1,11 +1,4 @@
-FROM library/archlinux:base-devel
-
-LABEL maintainer="HyperHDR" \
-	org.opencontainers.image.title="ArchLinux" \
-	org.opencontainers.image.description="HyperHDR build environment (ArchLinux)" \
-	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
-	org.opencontainers.image.vendor="HyperHDR"
+FROM ${DOCKER_SOURCE}
 
 # install HyperHDR deps packages
 RUN sudo pacman -Syy
