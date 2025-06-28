@@ -17,48 +17,48 @@ jobs:
         include:
           - runner: ubuntu-24.04
             architecture: x86_64
-            distro: ArchLinux
+            distro: archlinux
             dockerSource: library/archlinux:base-devel
             tool: buildArch
 
           - runner: ubuntu-24.04
             architecture: x86_64
-            distro: Fedora
+            distro: fedora
             distroVersion: 42
             tool: buildFedora
 
           - runner: ubuntu-24.04
             architecture: x86_64
-            distro: Ubuntu
+            distro: ubuntu
             distroVersion: jammy
             tool: buildDebian
 
           - runner: ubuntu-24.04
             architecture: x86_64
-            distro: Ubuntu
+            distro: ubuntu
             distroVersion: noble
             tool: buildDebian
 
           - runner: ubuntu-24.04
             architecture: x86_64
-            distro: Ubuntu
+            distro: ubuntu
             distroVersion: noble
             tool: buildDebian
                      
           - runner: ubuntu-24.04
             architecture: x86_64
-            distro: Debian
+            distro: debian
             tool: buildDebian
 
           - runner: ubuntu-24.04-arm
             architecture: aarch64
-            distro: Debian
+            distro: debian
             dockerSource: balenalib/raspberrypi3-64:{distroVersion}-build
             tool: buildDebian
 
           - runner: ubuntu-24.04-arm
             architecture: armv6l            
-            distro: Debian
+            distro: debian
             dockerSource: balenalib/raspberry-pi:{distroVersion}-build
             tool: buildDebian
 
@@ -103,4 +103,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-              DOCKER_SOURCE=${{ toLower(matrix.name != '' && matrix.name || format('{0}:{1}', matrix.distro, matrix.distroVersion)) }}
+              DOCKER_SOURCE=${{ matrix.name != '' && matrix.name || format('{0}:{1}', matrix.distro, matrix.distroVersion) }}
