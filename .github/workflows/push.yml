@@ -103,4 +103,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-              DOCKER_SOURCE=${{ matrix.name != '' && matrix.name || toLower(format('{0}:{1}', matrix.distro, matrix.distroVersion)) }}
+              DOCKER_SOURCE=${{ toLower(matrix.name != '' && matrix.name || format('{0}:{1}', matrix.distro, matrix.distroVersion)) }}
