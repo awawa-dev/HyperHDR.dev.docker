@@ -1,3 +1,4 @@
+ARG DOCKER_SOURCE
 FROM ${DOCKER_SOURCE}
 
 # install hyperhdr deps packages

@@ -78,7 +78,7 @@ jobs:
         with:
           images: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}
           tags: |
-            type=raw,,value=${{ matrix.distroVersion }} 
+            type=raw,value=${{ matrix.distroVersion }} 
           labels: |
             maintainer=HyperHDR
             org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})"
