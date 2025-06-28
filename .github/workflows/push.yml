@@ -77,7 +77,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.jobs[github.job].name }}
+          images: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
           labels: |
             maintainer=HyperHDR
             org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})"
