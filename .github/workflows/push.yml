@@ -25,28 +25,24 @@ jobs:
             architecture: x86_64
             distro: Fedora
             distroVersion: 42
-            dockerSource: "${{ matrix.distro }}:${{ matrix.distroVersion }}"
             tool: buildFedora
 
           - runner: ubuntu-24.04
             architecture: x86_64
             distro: Ubuntu
             distroVersion: jammy
-            dockerSource: ${{ matrix.distro }}:${{ matrix.distroVersion }}
             tool: buildDebian
 
           - runner: ubuntu-24.04
             architecture: x86_64
             distro: Ubuntu
             distroVersion: noble
-            dockerSource: ${{ matrix.distro }}:${{ matrix.distroVersion }}
             tool: buildDebian
 
           - runner: ubuntu-24.04
             architecture: x86_64
             distro: Ubuntu
             distroVersion: noble
-            dockerSource: ${{ matrix.distro }}:${{ matrix.distroVersion }}
             tool: buildDebian
                      
           - runner: ubuntu-24.04
