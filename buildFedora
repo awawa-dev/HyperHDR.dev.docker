@@ -2,9 +2,8 @@ ARG DOCKER_SOURCE
 FROM ${DOCKER_SOURCE}
 
 # install the packages required by HyperHDR
-#RUN sudo dnf -y upgrade
-#RUN sudo dnf -y install @c-development @development-tools
 
+RUN sudo dnf -y upgrade
 RUN sudo dnf -y install \
     alsa-lib-devel \
     chrpath \
