@@ -25,7 +25,7 @@ jobs:
             architecture: x86_64
             distro: Fedora
             distroVersion: 42
-            dockerSource: ${{ matrix.distro }}:${{ matrix.distroVersion }}
+            dockerSource: "${{ matrix.distro }}:${{ matrix.distroVersion }}"
             tool: buildFedora
 
           - runner: ubuntu-24.04
