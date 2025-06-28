@@ -17,30 +17,31 @@ LABEL maintainer="HyperHDR" \
 RUN sudo dnf -y upgrade
 RUN sudo dnf -y install @c-development @development-tools
 RUN sudo dnf -y install \
-	chrpath \
-	cmake \	
-	git \
-	alsa-lib-devel \
-	flatbuffers-devel flatbuffers-compiler \
-	fedora-packager \
-	mesa-libEGL-devel \
-	libftdi-c++-devel \
-	mesa-libGL-devel \
-	gtk3-devel \
-	libayatana-appindicator-gtk3-devel \	
-	libglvnd-devel \	
-	pipewire-devel \
-	openssl-devel \
-	turbojpeg-devel \
-	libusb1-devel \
-	libX11-devel \
-	libzstd-devel \
-	pkg-config \
-	wget \
-	xz-devel \
-	systemd-devel \
-	unzip \
-	ninja-build
+    alsa-lib-devel \
+    chrpath \
+    cmake \
+    fedora-packager \
+    flatbuffers-compiler \
+    flatbuffers-devel \
+    git \
+    gtk3-devel \
+    libX11-devel \
+    libayatana-appindicator-gtk3-devel \
+    libftdi-c++-devel \
+    libglvnd-devel \
+    libusb1-devel \
+    libzstd-devel \
+    mesa-libEGL-devel \
+    mesa-libGL-devel \
+    ninja-build \
+    openssl-devel \
+    pipewire-devel \
+    pkg-config \
+    systemd-devel \
+    turbojpeg-devel \
+    unzip \
+    wget \
+    xz-devel
 
 RUN sudo dnf clean all
 
