@@ -2,9 +2,9 @@ ARG DOCKER_SOURCE
 FROM ${DOCKER_SOURCE}
 
 # install the packages required by HyperHDR
-#RUN apt update
 #RUN apt upgrade -y
 
+RUN apt update
 RUN apt --assume-yes install \
     build-essential \
     cmake \

@@ -5,6 +5,7 @@ FROM ${DOCKER_SOURCE}
 #RUN sudo dnf -y upgrade
 #RUN sudo dnf -y install @c-development @development-tools
 
+RUN sudo dnf check-update
 RUN sudo dnf -y install \
     alsa-lib-devel \
     chrpath \
