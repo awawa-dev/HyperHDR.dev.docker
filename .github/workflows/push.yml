@@ -48,7 +48,6 @@ jobs:
           - runner: ubuntu-24.04
             architecture: x86_64
             distro: Debian
-            #dockerSource: ${{ matrix.distro }}:${{ matrix.distroVersion }}
             tool: buildDebian
 
           - runner: ubuntu-24.04-arm
@@ -102,4 +101,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-              DOCKER_SOURCE=${{ matrix.dockerSource }}
+              DOCKER_SOURCE=${{ ${{ matrix.dockerSource }} || ${{ matrix.distro }}:${{ matrix.distroVersion }} }}
