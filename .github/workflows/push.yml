@@ -98,7 +98,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          push: false
+          push: true
           file: ${{ matrix.tool }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
