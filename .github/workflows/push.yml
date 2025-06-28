@@ -101,4 +101,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-              DOCKER_SOURCE=${{ ${{ matrix.dockerSource }} || ${{ matrix.distro }}:${{ matrix.distroVersion }} }}
+              DOCKER_SOURCE=${{ ${{ matrix.dockerSource }} || "${{ matrix.distro }}:${{ matrix.distroVersion }}" }}
