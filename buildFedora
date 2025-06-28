@@ -1,11 +1,10 @@
 ARG DOCKER_SOURCE
 FROM ${DOCKER_SOURCE}
-ARG DOCKER_SOURCE
-RUN echo "DOCKER_SOURCE is: ${DOCKER_SOURCE}"
 
-# install hyperhdr deps packages
-RUN sudo dnf -y upgrade
-RUN sudo dnf -y install @c-development @development-tools
+# install the packages required by HyperHDR
+#RUN sudo dnf -y upgrade
+#RUN sudo dnf -y install @c-development @development-tools
+
 RUN sudo dnf -y install \
     alsa-lib-devel \
     chrpath \
@@ -13,6 +12,8 @@ RUN sudo dnf -y install \
     fedora-packager \
     flatbuffers-compiler \
     flatbuffers-devel \
+    gcc \
+    gcc-c++ \
     git \
     gtk3-devel \
     libX11-devel \

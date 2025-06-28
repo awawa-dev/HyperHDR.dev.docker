@@ -1,11 +1,9 @@
 ARG DOCKER_SOURCE
 FROM ${DOCKER_SOURCE}
-ARG DOCKER_SOURCE
-RUN echo "DOCKER_SOURCE is: ${DOCKER_SOURCE}"
 
-# install HyperHDR deps packages
-RUN sudo pacman -Syy
-RUN sudo pacman -Syu --noconfirm
+# install the packages required by HyperHDR
+#RUN sudo pacman -Syy
+#RUN sudo pacman -Syu --noconfirm
 RUN sudo pacman -S --noconfirm --needed \
     alsa-lib \
     bash \

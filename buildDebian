@@ -1,11 +1,9 @@
 ARG DOCKER_SOURCE
 FROM ${DOCKER_SOURCE}
-ARG DOCKER_SOURCE
-RUN echo "DOCKER_SOURCE is: ${DOCKER_SOURCE}"
 
-# install hyperhdr deps packages
-RUN apt update
-RUN apt upgrade -y
+# install the packages required by HyperHDR
+#RUN apt update
+#RUN apt upgrade -y
 
 RUN apt --assume-yes install \
     build-essential \
