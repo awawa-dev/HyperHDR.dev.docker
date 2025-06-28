@@ -34,41 +34,41 @@ jobs:
             dockerSource: ubuntu
             linuxVersion: jammy
             description: Ubuntu 22.04 LTS (x86_64)
-            tool: buildNative
+            tool: buildDebian
           - runner: ubuntu-24.04
             architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
             linuxVersion: noble
             description: Ubuntu 24.04 LTS (x86_64)
-            tool: buildNative
+            tool: buildDebian
           - runner: ubuntu-24.04
             architecture: x86_64
             dockerOS: Ubuntu
             dockerSource: ubuntu
             linuxVersion: plucky
             description: Ubuntu 25.04 (x86_64)
-            tool: buildNative            
+            tool: buildDebian            
           - runner: ubuntu-24.04
             architecture: x86_64
             dockerOS: Debian
             dockerSource: debian
             description: (x86_64)
-            tool: buildNative
+            tool: buildDebian
           - runner: ubuntu-24.04-arm
             architecture: arm-64bit-aarch64-native
             dockerOS: Debian
             dockerSource: balenalib/raspberrypi3-64
             dockerSufix: -build
             description: (native ARM 64bit aarch64)
-            tool: buildNative
+            tool: buildDebian
           - runner: ubuntu-24.04-arm
             architecture: arm-32bit-armv6l-native
             dockerOS: Debian
             dockerSource: balenalib/raspberry-pi
             dockerSufix: -build
             description: (native ARM 32bit armv6l)
-            tool: buildNative
+            tool: buildDebian
 
     steps:
       - name: Checkout
