@@ -95,6 +95,6 @@ jobs:
           --label org.opencontainers.image.source="https://github.com/awawa-dev/HyperDockerBuilder" \
           --label org.opencontainers.image.vendor="HyperHDR" \
           --label org.opencontainers.image.licenses="MIT" \
-          --build-arg DOCKER_SOURCE=$FINAL_DOCKER_SOURCE \
+          --build-arg DOCKER_SOURCE="$FINAL_DOCKER_SOURCE" \
           -f ${{ matrix.tool }} .
 # docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}              
