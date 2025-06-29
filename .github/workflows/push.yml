@@ -78,12 +78,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
      
       - name: Prepare docker source
+        env:
+          DOCKER_SOURCE_TEMPLATE: ${{ matrix.dockerSource }}
+          DISTRO: ${{ matrix.distro }}
+          DISTRO_VERSION: ${{ matrix.distroVersion }}
         run: |
-          if [ -n "${{ matrix.dockerSource }}" ]; then
-            echo FINAL_DOCKER_SOURCE="$( echo ${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/)" " >> $GITHUB_ENV
-          else
-            echo FINAL_DOCKER_SOURCE="${{ matrix.distro }}:${{ matrix.distroVersion }}" " >> $GITHUB_ENV
-          fi
+        if [ -n "$DOCKER_SOURCE_TEMPLATE" ]; then
+          FINAL_DOCKER_SOURCE=$(echo "$DOCKER_SOURCE_TEMPLATE" | sed "s/{distroVersion}/$DISTRO_VERSION/")
+        else
+          FINAL_DOCKER_SOURCE="$DISTRO:$DISTRO_VERSION"
+        fi
+        echo "FINAL_DOCKER_SOURCE=$FINAL_DOCKER_SOURCE" >> $GITHUB_ENV
 
       - name: Build & push docker container
         env:
