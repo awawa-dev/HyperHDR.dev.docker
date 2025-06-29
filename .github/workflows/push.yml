@@ -81,9 +81,11 @@ jobs:
         env:
           HYPERHDR_DOCKER_TAG: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
         run: |
-          export REPLACED_DOCKER_SOURCE="${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/"
-          echo ${{ matrix.dockerSource}}
-          echo $REPLACED_DOCKER_SOURCE
+          if [ -n "${{ matrix.dockerSource }}" ]; then \
+            FINAL_DOCKER_SOURCE="${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/" \
+          else \
+            FINAL_DOCKER_SOURCE="${{ matrix.distro }}:${{ matrix.distroVersion }}" \
+          fi
           docker build \
           -t ${{ env.HYPERHDR_DOCKER_TAG }} \
           --label maintainer="HyperHDR" \
@@ -93,6 +95,6 @@ jobs:
           --label org.opencontainers.image.source="https://github.com/awawa-dev/HyperDockerBuilder" \
           --label org.opencontainers.image.vendor="HyperHDR" \
           --label org.opencontainers.image.licenses="MIT" \
-          --build-arg DOCKER_SOURCE=${{ matrix.dockerSource != '' && env.REPLACED_DOCKER_SOURCE || format('{0}:{1}', matrix.distro, matrix.distroVersion) }} \
+          --build-arg DOCKER_SOURCE=$FINAL_DOCKER_SOURCE \
           -f ${{ matrix.tool }} .
 # docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}              
