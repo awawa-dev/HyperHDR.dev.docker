@@ -82,7 +82,7 @@ jobs:
           HYPERHDR_DOCKER_TAG: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
         run: |
           if [ -n "${{ matrix.dockerSource }}" ]; then
-            FINAL_DOCKER_SOURCE="${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/"
+            FINAL_DOCKER_SOURCE="$( echo ${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/)"
           else
             FINAL_DOCKER_SOURCE="${{ matrix.distro }}:${{ matrix.distroVersion }}"
           fi
