@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        architecture: [ x86_64, armv6l, aarch64]
+        architecture: [ x86_64, armhf, arm64]
         distroVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
@@ -51,13 +51,13 @@ jobs:
             tool: buildDebian
 
           - runner: ubuntu-24.04-arm
-            architecture: aarch64
+            architecture: arm64
             distro: debian
             dockerSource: balenalib/raspberrypi3-64:{distroVersion}-build
             tool: buildDebian
 
           - runner: ubuntu-24.04-arm
-            architecture: armv6l            
+            architecture: armhf            
             distro: debian
             dockerSource: balenalib/raspberry-pi:{distroVersion}-build
             tool: buildDebian
@@ -98,7 +98,7 @@ jobs:
         uses: docker/build-push-action@v6.18.0
         with:
           context: .
-          push: false
+          push: true
           file: ${{ matrix.tool }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
