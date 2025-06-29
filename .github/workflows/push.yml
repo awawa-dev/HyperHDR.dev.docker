@@ -84,11 +84,11 @@ jobs:
           DISTRO_VERSION: ${{ matrix.distroVersion }}
         run: |
           if [ -n "$DOCKER_SOURCE_TEMPLATE" ]; then
-            FINAL_DOCKER_SOURCE="$DOCKER_SOURCE_TEMPLATE" | sed "s/{distroVersion}/$DISTRO_VERSION/"
+            FINAL_DOCKER_SOURCE=$(echo "$DOCKER_SOURCE_TEMPLATE" | sed "s/{distroVersion}/$DISTRO_VERSION/")
           else
             FINAL_DOCKER_SOURCE="$DISTRO:$DISTRO_VERSION"
           fi
-          echo "FINAL_DOCKER_SOURCE=$(echo ${FINAL_DOCKER_SOURCE})" >> $GITHUB_ENV
+          echo "FINAL_DOCKER_SOURCE=$FINAL_DOCKER_SOURCE" >> $GITHUB_ENV
 
       - name: Build & push docker container
         env:
