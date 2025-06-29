@@ -82,11 +82,11 @@ jobs:
             type=raw,value=${{ matrix.distroVersion }} 
           labels: |
             maintainer=HyperHDR
-            org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})"
-            org.opencontainers.image.description="HyperHDR build environment"
-            org.opencontainers.image.url="https://hyperhdr.eu"
-            org.opencontainers.image.vendor="HyperHDR"
-            org.opencontainers.image.licenses="MIT"
+            org.opencontainers.image.title=${{ matrix.distro }} (${{ matrix.distroVersion }})
+            org.opencontainers.image.description=HyperHDR build environment
+            org.opencontainers.image.url=https://hyperhdr.eu
+            org.opencontainers.image.vendor=HyperHDR
+            org.opencontainers.image.licenses=MIT
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3.4
