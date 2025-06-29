@@ -70,33 +70,6 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.6.0
 
-      - name: Install Docker Buildx
-        uses: docker/setup-buildx-action@v3.11.1
-
-      - name: Set docker meta-data
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}
-          tags: |
-            type=raw,value=${{ matrix.distroVersion }} 
-          labels: |
-            maintainer=HyperHDR
-            org.opencontainers.image.title=${{ matrix.distro }} (${{ matrix.distroVersion }})
-            org.opencontainers.image.description=HyperHDR build environment
-            org.opencontainers.image.url=https://hyperhdr.eu
-            org.opencontainers.image.source=https://github.com/awawa-dev/HyperDockerBuilder
-            org.opencontainers.image.vendor=HyperHDR
-            org.opencontainers.image.licenses=MIT
-          annotations: |
-            maintainer=HyperHDR
-            org.opencontainers.image.title=${{ matrix.distro }} (${{ matrix.distroVersion }})
-            org.opencontainers.image.description=HyperHDR build environment
-            org.opencontainers.image.url=https://hyperhdr.eu
-            org.opencontainers.image.source=https://github.com/awawa-dev/HyperDockerBuilder
-            org.opencontainers.image.vendor=HyperHDR
-            org.opencontainers.image.licenses=MIT            
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3.4
         with:
@@ -107,19 +80,22 @@ jobs:
       - name: Prepare docker source
         run: |
           input="${{ matrix.dockerSource }}"
-          from="{distroVersion}"
-          to="${{ matrix.distroVersion }}"
-          result="${input//$from/$to}"
-          echo "REPLACED_DOCKER_SOURCE=${result}" >> $GITHUB_ENV
+          toReplace="${{ matrix.distroVersion }}"
+          echo "REPLACED_DOCKER_SOURCE=${input//{distroVersion}/$toReplace}" >> $GITHUB_ENV
 
       - name: Build & push docker container
-        uses: docker/build-push-action@v6.18.0
-        with:
-          context: .
-          push: true
-          file: ${{ matrix.tool }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          annotations: ${{ steps.meta.outputs.annotations }}
-          build-args: |
-              DOCKER_SOURCE=${{ matrix.dockerSource != '' && env.REPLACED_DOCKER_SOURCE || format('{0}:{1}', matrix.distro, matrix.distroVersion) }}
+        env:
+          HYPERHDR_DOCKER_TAG: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
+        run: |
+          docker build \
+            -t ${{ env.HYPERHDR_DOCKER_TAG }} \         
+            --label maintainer="HyperHDR" \
+            --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
+            --label org.opencontainers.image.description="HyperHDR build environment" \
+            --label org.opencontainers.image.url="https://hyperhdr.eu" \
+            --label org.opencontainers.image.source="https://github.com/awawa-dev/HyperDockerBuilder" \
+            --label org.opencontainers.image.vendor="HyperHDR" \
+            --label org.opencontainers.image.licenses="MIT" \
+            --build-arg DOCKER_SOURCE=${{ matrix.dockerSource != '' && env.REPLACED_DOCKER_SOURCE || format('{0}:{1}', matrix.distro, matrix.distroVersion) }} \
+            -f ${{ matrix.tool }} .
+# docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}              
