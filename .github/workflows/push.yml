@@ -78,9 +78,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
      
       - name: Prepare docker source
+        env:
+          DOCKER_SOURCE_TEMPLATE: ${{ matrix.dockerSource }}
+          DISTRO: ${{ matrix.distro }}
+          DISTRO_VERSION: ${{ matrix.distroVersion }}
         run: |
-          FINAL_DOCKER_SOURCE="${{ matrix.dockerSource != '' && format('{0}:{1}', matrix.dockerSource, matrix.distroVersion) || format('{0}:{1}', matrix.distro, matrix.distroVersion) }}"
-          echo "FINAL_DOCKER_SOURCE=$FINAL_DOCKER_SOURCE" >> $GITHUB_ENV
+          if [ -n "$DOCKER_SOURCE_TEMPLATE" ]; then
+            FINAL_DOCKER_SOURCE="$DOCKER_SOURCE_TEMPLATE" | sed "s/{distroVersion}/$DISTRO_VERSION/"
+          else
+            FINAL_DOCKER_SOURCE="$DISTRO:$DISTRO_VERSION"
+          fi
+          echo "FINAL_DOCKER_SOURCE=$(echo ${FINAL_DOCKER_SOURCE})" >> $GITHUB_ENV
 
       - name: Build & push docker container
         env:
@@ -97,4 +105,4 @@ jobs:
           --label org.opencontainers.image.licenses="MIT" \
           --build-arg DOCKER_SOURCE="${{ env.FINAL_DOCKER_SOURCE }}" \
           -f ${{ matrix.tool }} .
-#          docker push ${{ env.HYPERHDR_DOCKER_TAG }}
+          docker push ${{ env.HYPERHDR_DOCKER_TAG }}
