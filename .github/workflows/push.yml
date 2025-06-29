@@ -83,7 +83,7 @@ jobs:
         run: |
           export REPLACED_DOCKER_SOURCE="${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/"
           docker build \
-          -t ${{ env.HYPERHDR_DOCKER_TAG }} \         
+          -t ${{ env.HYPERHDR_DOCKER_TAG }} \      
           --label maintainer="HyperHDR" \
           --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
           --label org.opencontainers.image.description="HyperHDR build environment" \
