@@ -98,7 +98,7 @@ jobs:
       - name: Prepare docker source
         run: |
           original="${{ matrix.input }}"
-          echo "REPLACED_DOCKER_SOURCE="${original/{distroVersion}/${{ matrix.distroVersion }}}" >> $GITHUB_ENV
+          echo "REPLACED_DOCKER_SOURCE=${original/{distroVersion}/${{ matrix.distroVersion }}}" >> $GITHUB_ENV
 
       - name: Build & push docker container
         uses: docker/build-push-action@v6.18.0
