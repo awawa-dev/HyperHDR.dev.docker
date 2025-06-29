@@ -88,6 +88,14 @@ jobs:
             org.opencontainers.image.source=https://github.com/awawa-dev/HyperDockerBuilder
             org.opencontainers.image.vendor=HyperHDR
             org.opencontainers.image.licenses=MIT
+          annotations: |
+            maintainer=HyperHDR
+            org.opencontainers.image.title=${{ matrix.distro }} (${{ matrix.distroVersion }})
+            org.opencontainers.image.description=HyperHDR build environment
+            org.opencontainers.image.url=https://hyperhdr.eu
+            org.opencontainers.image.source=https://github.com/awawa-dev/HyperDockerBuilder
+            org.opencontainers.image.vendor=HyperHDR
+            org.opencontainers.image.licenses=MIT            
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3.4
@@ -112,6 +120,6 @@ jobs:
           file: ${{ matrix.tool }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          annotations: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
               DOCKER_SOURCE=${{ matrix.dockerSource != '' && env.REPLACED_DOCKER_SOURCE || format('{0}:{1}', matrix.distro, matrix.distroVersion) }}
