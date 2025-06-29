@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        architecture: [ x86_64, armhf, arm64]
+        architecture: [ armhf, arm64, x86_64]
         distroVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
@@ -45,6 +45,11 @@ jobs:
             distro: ubuntu
             distroVersion: plucky
             tool: buildDebian
+                     
+          - runner: ubuntu-24.04
+            architecture: x86_64
+            distro: debian
+            tool: buildDebian             
 
           - runner: ubuntu-24.04-arm
             architecture: arm64
@@ -56,12 +61,7 @@ jobs:
             architecture: armhf            
             distro: debian
             dockerSource: balenalib/raspberry-pi:{distroVersion}-build
-            tool: buildDebian
-                     
-          - runner: ubuntu-24.04
-            architecture: x86_64
-            distro: debian
-            tool: buildDebian            
+            tool: buildDebian           
 
     steps:
       - name: Checkout
