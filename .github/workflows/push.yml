@@ -12,42 +12,42 @@ jobs:
 
     strategy:
       matrix:
-        architecture: [ armhf, arm64, x86_64]
+        architecture: [ armhf, arm64, amd64]
         distroVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
-            architecture: x86_64
+            architecture: amd64
             distro: archlinux
             distroVersion: rolling
             dockerSource: library/archlinux:base-devel
             tool: buildArch
 
           - runner: ubuntu-24.04
-            architecture: x86_64
+            architecture: amd64
             distro: fedora
             distroVersion: 42
             tool: buildFedora
 
           - runner: ubuntu-24.04
-            architecture: x86_64
+            architecture: amd64
             distro: ubuntu
             distroVersion: jammy
             tool: buildDebian
 
           - runner: ubuntu-24.04
-            architecture: x86_64
+            architecture: amd64
             distro: ubuntu
             distroVersion: noble
             tool: buildDebian
 
           - runner: ubuntu-24.04
-            architecture: x86_64
+            architecture: amd64
             distro: ubuntu
             distroVersion: plucky
             tool: buildDebian
                      
           - runner: ubuntu-24.04
-            architecture: x86_64
+            architecture: amd64
             distro: debian
             tool: buildDebian             
 
@@ -96,6 +96,7 @@ jobs:
         run: |
           docker build \
           -t ${{ env.HYPERHDR_DOCKER_TAG }} \
+          --platform linux/${{ matrix.architecture }} \
           --label maintainer="HyperHDR" \
           --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
           --label org.opencontainers.image.description="HyperHDR build environment" \
