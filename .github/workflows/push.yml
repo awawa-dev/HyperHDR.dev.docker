@@ -82,6 +82,8 @@ jobs:
           HYPERHDR_DOCKER_TAG: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
         run: |
           export REPLACED_DOCKER_SOURCE="${{ matrix.dockerSource }}" | sed "s/{distroVersion}/${{ matrix.distroVersion }}/"
+          echo ${{ matrix.dockerSource}}
+          echo $REPLACED_DOCKER_SOURCE
           docker build \
           -t ${{ env.HYPERHDR_DOCKER_TAG }} \
           --label maintainer="HyperHDR" \
