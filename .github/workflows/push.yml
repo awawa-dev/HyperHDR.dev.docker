@@ -4,71 +4,64 @@ on:
   push:
 
 jobs:
-  Native-Dockers:
-    name: ${{ matrix.dockerOS }} ${{ matrix.linuxVersion }} ${{ matrix.description }}
+  DevelopmentDockerBuilder:
+    name: ${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
     runs-on: ${{ matrix.runner }}
     permissions:
-      packages: write    
+      packages: write
+
     strategy:
       matrix:
-        architecture: [ x86_64, arm-32bit-armv6l-native, arm-64bit-aarch64-native]
-        linuxVersion: [ bullseye, bookworm]
+        architecture: [ armhf, arm64, amd64]
+        distroVersion: [ bullseye, bookworm]
         include:
           - runner: ubuntu-24.04
-            architecture: x86_64
-            linuxVersion: "ArchLinux"
-            dockerOS: ""
-            dockerSource: ""
-            description: ArchLinux (x86_64)
+            architecture: amd64
+            distro: archlinux
+            distroVersion: rolling
+            dockerSource: library/archlinux:base-devel
             tool: buildArch
+
           - runner: ubuntu-24.04
-            architecture: x86_64
-            linuxVersion: "Fedora_42"
-            dockerOS: ""
-            dockerSource: "fedora:42"
-            description: "(x86_64)"
+            architecture: amd64
+            distro: fedora
+            distroVersion: 42
             tool: buildFedora
+
           - runner: ubuntu-24.04
-            architecture: x86_64
-            dockerOS: Ubuntu
-            dockerSource: ubuntu
-            linuxVersion: jammy
-            description: Ubuntu 22.04 LTS (x86_64)
-            tool: buildNative
+            architecture: amd64
+            distro: ubuntu
+            distroVersion: jammy
+            tool: buildDebian
+
           - runner: ubuntu-24.04
-            architecture: x86_64
-            dockerOS: Ubuntu
-            dockerSource: ubuntu
-            linuxVersion: noble
-            description: Ubuntu 24.04 LTS (x86_64)
-            tool: buildNative
+            architecture: amd64
+            distro: ubuntu
+            distroVersion: noble
+            tool: buildDebian
+
           - runner: ubuntu-24.04
-            architecture: x86_64
-            dockerOS: Ubuntu
-            dockerSource: ubuntu
-            linuxVersion: plucky
-            description: Ubuntu 25.04 (x86_64)
-            tool: buildNative            
+            architecture: amd64
+            distro: ubuntu
+            distroVersion: plucky
+            tool: buildDebian
+                     
           - runner: ubuntu-24.04
-            architecture: x86_64
-            dockerOS: Debian
-            dockerSource: debian
-            description: (x86_64)
-            tool: buildNative
+            architecture: amd64
+            distro: debian
+            tool: buildDebian             
+
           - runner: ubuntu-24.04-arm
-            architecture: arm-64bit-aarch64-native
-            dockerOS: Debian
-            dockerSource: balenalib/raspberrypi3-64
-            dockerSufix: -build
-            description: (native ARM 64bit aarch64)
-            tool: buildNative
+            architecture: arm64
+            distro: debian
+            dockerSource: balenalib/raspberrypi3-64:{distroVersion}-build
+            tool: buildDebian
+
           - runner: ubuntu-24.04-arm
-            architecture: arm-32bit-armv6l-native
-            dockerOS: Debian
-            dockerSource: balenalib/raspberry-pi
-            dockerSufix: -build
-            description: (native ARM 32bit armv6l)
-            tool: buildNative
+            architecture: armhf            
+            distro: debian
+            dockerSource: balenalib/raspberry-pi:{distroVersion}-build
+            tool: buildDebian           
 
     steps:
       - name: Checkout
@@ -77,26 +70,40 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3.6.0
 
-      - name: Install Docker Buildx
-        uses: docker/setup-buildx-action@v3.11.1
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3.4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+     
+      - name: Prepare docker source
+        env:
+          DOCKER_SOURCE_TEMPLATE: ${{ matrix.dockerSource }}
+          DISTRO: ${{ matrix.distro }}
+          DISTRO_VERSION: ${{ matrix.distroVersion }}
+        run: |
+          if [ -n "$DOCKER_SOURCE_TEMPLATE" ]; then
+            FINAL_DOCKER_SOURCE=$(echo "$DOCKER_SOURCE_TEMPLATE" | sed "s/{distroVersion}/$DISTRO_VERSION/")
+          else
+            FINAL_DOCKER_SOURCE="$DISTRO:$DISTRO_VERSION"
+          fi
+          echo "FINAL_DOCKER_SOURCE=$FINAL_DOCKER_SOURCE" >> $GITHUB_ENV
 
       - name: Build & push docker container
-        uses: docker/build-push-action@v6.18.0
-        with:
-          context: .
-          push: true
-          file: ${{ matrix.tool }}
-          tags: ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}
-          build-args: |
-              LINUX_VERSION=${{ matrix.linuxVersion }}
-              LINUX_ARCHITECTURE=${{ matrix.architecture }}
-              DOCKER_SOURCE=${{ matrix.dockerSource }}
-              DOCKER_SUFIX=${{ matrix.dockerSufix }}
-              BUILD_DESC="${{ matrix.description }}"
+        env:
+          HYPERHDR_DOCKER_TAG: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
+        run: |
+          docker build \
+          -t ${{ env.HYPERHDR_DOCKER_TAG }} \
+          --platform linux/${{ matrix.architecture }} \
+          --label maintainer="HyperHDR" \
+          --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
+          --label org.opencontainers.image.description="HyperHDR build environment" \
+          --label org.opencontainers.image.url="https://hyperhdr.eu" \
+          --label org.opencontainers.image.source="${{ github.server_url }}/${{ github.repository }}" \
+          --label org.opencontainers.image.vendor="HyperHDR" \
+          --label org.opencontainers.image.licenses="MIT" \
+          --build-arg DOCKER_SOURCE="${{ env.FINAL_DOCKER_SOURCE }}" \
+          -f ${{ matrix.tool }} .
+          docker push ${{ env.HYPERHDR_DOCKER_TAG }}

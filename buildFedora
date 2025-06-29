@@ -1,46 +1,37 @@
-ARG LINUX_VERSION
 ARG DOCKER_SOURCE
-ARG BUILD_DESC
 FROM ${DOCKER_SOURCE}
-ARG LINUX_VERSION
-ARG DOCKER_SOURCE
-ARG BUILD_DESC
 
-LABEL maintainer="HyperHDR" \
-	org.opencontainers.image.title="${LINUX_VERSION}" \
-	org.opencontainers.image.description="HyperHDR build environment for ${LINUX_VERSION}" \
-	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
-	org.opencontainers.image.vendor="HyperHDR"
+# install the packages required by HyperHDR
 
-# install hyperhdr deps packages
 RUN sudo dnf -y upgrade
-RUN sudo dnf -y install @c-development @development-tools
 RUN sudo dnf -y install \
-	chrpath \
-	cmake \	
-	git \
-	alsa-lib-devel \
-	flatbuffers-devel flatbuffers-compiler \
-	fedora-packager \
-	mesa-libEGL-devel \
-	libftdi-c++-devel \
-	mesa-libGL-devel \
-	gtk3-devel \
-	libayatana-appindicator-gtk3-devel \	
-	libglvnd-devel \	
-	pipewire-devel \
-	openssl-devel \
-	turbojpeg-devel \
-	libusb1-devel \
-	libX11-devel \
-	libzstd-devel \
-	pkg-config \
-	wget \
-	xz-devel \
-	systemd-devel \
-	unzip \
-	ninja-build
+    alsa-lib-devel \
+    chrpath \
+    cmake \
+    fedora-packager \
+    flatbuffers-compiler \
+    flatbuffers-devel \
+    gcc \
+    gcc-c++ \
+    git \
+    gtk3-devel \
+    libX11-devel \
+    libayatana-appindicator-gtk3-devel \
+    libftdi-c++-devel \
+    libglvnd-devel \
+    libusb1-devel \
+    libzstd-devel \
+    mesa-libEGL-devel \
+    mesa-libGL-devel \
+    ninja-build \
+    openssl-devel \
+    pipewire-devel \
+    pkg-config \
+    systemd-devel \
+    turbojpeg-devel \
+    unzip \
+    wget \
+    xz-devel
 
 RUN sudo dnf clean all
 

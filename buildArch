@@ -1,48 +1,43 @@
-FROM library/archlinux:base-devel
+ARG DOCKER_SOURCE
+FROM ${DOCKER_SOURCE}
 
-LABEL maintainer="HyperHDR" \
-	org.opencontainers.image.title="ArchLinux" \
-	org.opencontainers.image.description="HyperHDR build environment (ArchLinux)" \
-	org.opencontainers.image.url="https://github.com/awawa-dev" \
-	org.opencontainers.image.source="https://github.com/awawa-dev/HyperHDR.dev.docker" \
-	org.opencontainers.image.vendor="HyperHDR"
+# install the packages required by HyperHDR
 
-# install HyperHDR deps packages
 RUN sudo pacman -Syy
 RUN sudo pacman -Syu --noconfirm
 RUN sudo pacman -S --noconfirm --needed \
-	base-devel \
-	openssl \
-	chrpath \	
-	cmake \
-	flatbuffers \
-	git \
-	alsa-lib \
-	gtk3 \
-	libayatana-appindicator \	
-	libftdi \
-	libglvnd \
-	libjpeg-turbo \
-	wayland \
-	libx11 \
-	freetds \
-	libfbclient \
-	mariadb-libs \
-	postgresql-libs \	
-	pipewire \
-	python \
-	mesa \
-	dpkg \
-	xz \
-	fakeroot \
-	binutils \
-	pkgfile \
-	bash \
-	systemd-libs \
-	wget \
-	unzip \
-	sdbus-cpp \
-	ninja
+    alsa-lib \
+    bash \
+    base-devel \
+    binutils \
+    chrpath \
+    cmake \
+    dpkg \
+    fakeroot \
+    flatbuffers \
+    freetds \
+    git \
+    gtk3 \
+    libayatana-appindicator \
+    libfbclient \
+    libftdi \
+    libglvnd \
+    libjpeg-turbo \
+    libx11 \
+    mariadb-libs \
+    mesa \
+    ninja \
+    openssl \
+    pipewire \
+    pkgfile \
+    postgresql-libs \
+    python \
+    sdbus-cpp \
+    systemd-libs \
+    unzip \
+    wayland \
+    wget \
+    xz
 
 RUN sudo sed -i "/OPTIONS/s/\sdebug/ !debug/g" /etc/makepkg.conf
 RUN sudo sed -i "/OPTIONS/s/\slto/ !lto/g" /etc/makepkg.conf
