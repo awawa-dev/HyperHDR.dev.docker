@@ -18,6 +18,7 @@ jobs:
           - runner: ubuntu-24.04
             architecture: x86_64
             distro: archlinux
+            distroVersion: rolling
             dockerSource: library/archlinux:base-devel
             tool: buildArch
 
