@@ -81,21 +81,21 @@ jobs:
         run: |
           input="${{ matrix.dockerSource }}"
           toReplace="${{ matrix.distroVersion }}"
-          echo "REPLACED_DOCKER_SOURCE=${input//{distroVersion}/$toReplace}" >> $GITHUB_ENV
+          echo "REPLACED_DOCKER_SOURCE=${${{ matrix.dockerSource }}//{distroVersion}/${{ matrix.distroVersion }}" >> $GITHUB_ENV
 
       - name: Build & push docker container
         env:
           HYPERHDR_DOCKER_TAG: ghcr.io/awawa-dev/${{ matrix.architecture }}/${{ matrix.distro }}:${{ matrix.distroVersion }}
         run: |
           docker build \
-            -t ${{ env.HYPERHDR_DOCKER_TAG }} \         
-            --label maintainer="HyperHDR" \
-            --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
-            --label org.opencontainers.image.description="HyperHDR build environment" \
-            --label org.opencontainers.image.url="https://hyperhdr.eu" \
-            --label org.opencontainers.image.source="https://github.com/awawa-dev/HyperDockerBuilder" \
-            --label org.opencontainers.image.vendor="HyperHDR" \
-            --label org.opencontainers.image.licenses="MIT" \
-            --build-arg DOCKER_SOURCE=${{ matrix.dockerSource != '' && env.REPLACED_DOCKER_SOURCE || format('{0}:{1}', matrix.distro, matrix.distroVersion) }} \
-            -f ${{ matrix.tool }} .
+          -t ${{ env.HYPERHDR_DOCKER_TAG }} \         
+          --label maintainer="HyperHDR" \
+          --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
+          --label org.opencontainers.image.description="HyperHDR build environment" \
+          --label org.opencontainers.image.url="https://hyperhdr.eu" \
+          --label org.opencontainers.image.source="https://github.com/awawa-dev/HyperDockerBuilder" \
+          --label org.opencontainers.image.vendor="HyperHDR" \
+          --label org.opencontainers.image.licenses="MIT" \
+          --build-arg DOCKER_SOURCE=${{ matrix.dockerSource != '' && env.REPLACED_DOCKER_SOURCE || format('{0}:{1}', matrix.distro, matrix.distroVersion) }} \
+          -f ${{ matrix.tool }} .
 # docker push ghcr.io/awawa-dev/${{ matrix.architecture }}:${{ matrix.linuxVersion }}              
