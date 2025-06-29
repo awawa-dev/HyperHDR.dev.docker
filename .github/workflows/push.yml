@@ -43,12 +43,7 @@ jobs:
           - runner: ubuntu-24.04
             architecture: x86_64
             distro: ubuntu
-            distroVersion: noble
-            tool: buildDebian
-                     
-          - runner: ubuntu-24.04
-            architecture: x86_64
-            distro: debian
+            distroVersion: plucky
             tool: buildDebian
 
           - runner: ubuntu-24.04-arm
@@ -62,6 +57,11 @@ jobs:
             distro: debian
             dockerSource: balenalib/raspberry-pi:{distroVersion}-build
             tool: buildDebian
+                     
+          - runner: ubuntu-24.04
+            architecture: x86_64
+            distro: debian
+            tool: buildDebian            
 
     steps:
       - name: Checkout
@@ -100,7 +100,7 @@ jobs:
           --label org.opencontainers.image.title="${{ matrix.distro }} (${{ matrix.distroVersion }})" \
           --label org.opencontainers.image.description="HyperHDR build environment" \
           --label org.opencontainers.image.url="https://hyperhdr.eu" \
-          --label org.opencontainers.image.source="https://github.com/awawa-dev/HyperDockerBuilder" \
+          --label org.opencontainers.image.source="${{ github.server_url }}/${{ github.repository }}" \
           --label org.opencontainers.image.vendor="HyperHDR" \
           --label org.opencontainers.image.licenses="MIT" \
           --build-arg DOCKER_SOURCE="${{ env.FINAL_DOCKER_SOURCE }}" \
